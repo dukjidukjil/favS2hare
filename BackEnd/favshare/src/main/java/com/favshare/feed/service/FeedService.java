@@ -1,21 +1,18 @@
-package com.favshare._temp.service;
+package com.favshare.feed.service;
 
-import com.favshare._temp.dto.input.FeedUserIdDto;
-import com.favshare._temp.dto.input.IdFeedImageUrlDto;
-import com.favshare._temp.dto.input.IdNameDto;
 import com.favshare._temp.entity.FeedEntity;
+import com.favshare._temp.repository.FeedRepository;
 import com.favshare.feed.dto.ModifyFeedImageRequest;
 import com.favshare.feed.dto.ModifyFeedRequest;
 import com.favshare.feed.dto.ModifyFirstFeedRequest;
 import com.favshare.global.exception.CustomException;
 import com.favshare.user.entity.User;
-import com.favshare._temp.repository.FeedRepository;
 import com.favshare.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static com.favshare.global.exception.ErrorCode.FEED_NOT_FOUND;
-import static com.favshare.global.exception.ErrorCode.USER_NOT_FOUND;
+import static com.favshare.feed.exception.ErrorCode.FEED_NOT_FOUND;
+import static com.favshare.feed.exception.ErrorCode.USER_NOT_FOUND;
 
 @Service
 public class FeedService {
