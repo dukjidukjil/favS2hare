@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.favshare._temp.entity.UserEntity;
+import com.favshare.user.entity.User;
 
 import lombok.*;
 
@@ -20,13 +20,13 @@ public class UserSignUpDto {
 	private Date birthDate;
 	private String phone;
 
-	public UserSignUpDto(UserEntity userEntity) {
-		this.name = userEntity.getName();
-		this.email = userEntity.getEmail();
-		this.password = userEntity.getPassword();
-		this.nickname = userEntity.getNickname();
-		this.birthDate = userEntity.getBirthDate();
-		this.phone = userEntity.getPhone();
+	public UserSignUpDto(User user) {
+		this.name = user.getName();
+		this.email = user.getEmail();
+		this.password = user.getPassword();
+		this.nickname = user.getNickname();
+		this.birthDate = user.getBirthDate();
+		this.phone = user.getPhone();
 	}
 
 }

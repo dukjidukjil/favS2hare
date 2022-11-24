@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.favshare.user.entity.User;
 import lombok.*;
 
 @Entity
@@ -28,7 +29,7 @@ public class FeedEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false)
-	private UserEntity userEntity;
+	private User user;
 
 	@OneToMany(mappedBy = "feedEntity", cascade = CascadeType.ALL)
 	private List<PopInFeedEntity> popInFeedList = new ArrayList<>();

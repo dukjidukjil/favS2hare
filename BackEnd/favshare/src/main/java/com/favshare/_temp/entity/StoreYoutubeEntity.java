@@ -2,6 +2,8 @@ package com.favshare._temp.entity;
 
 
 import javax.persistence.*;
+
+import com.favshare.user.entity.User;
 import lombok.*;
 
 @Entity
@@ -23,6 +25,6 @@ public class StoreYoutubeEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id",nullable = false)
-    private UserEntity userEntity;
+    private User user;
     
 }

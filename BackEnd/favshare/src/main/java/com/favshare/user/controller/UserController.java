@@ -1,11 +1,11 @@
-package com.favshare._temp.controller;
+package com.favshare.user.controller;
 
 import java.util.*;
 
 import com.favshare._temp.dto.UserAccountDto;
 import com.favshare._temp.dto.input.UserSignUpDto;
 import com.favshare._temp.service.JwtServiceImpl;
-import com.favshare._temp.service.UserService;
+import com.favshare.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

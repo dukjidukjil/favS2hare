@@ -33,7 +33,7 @@ public class PopDto {
 		this.likeCount = popEntity.getLikePopList().size();
 		this.youtubeUrl = popEntity.getYoutubeEntity().getUrl();
 		this.isLiked = isLiked;
-		this.userId = popEntity.getUserEntity().getId();
+		this.userId = popEntity.getUser().getId();
 		this.isMuted = popEntity.isMuted();
 	}
 }

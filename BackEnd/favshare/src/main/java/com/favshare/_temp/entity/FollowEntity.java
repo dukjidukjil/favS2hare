@@ -2,6 +2,7 @@ package com.favshare._temp.entity;
 
 import javax.persistence.*;
 
+import com.favshare.user.entity.User;
 import lombok.*;
 
 @Entity
@@ -18,10 +19,10 @@ public class FollowEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "from_user_id", nullable = false)
-	private UserEntity fromUserEntity;
+	private User fromUser;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "to_user_id", nullable = false)
-	private UserEntity toUserEntity;
+	private User toUser;
 
 }

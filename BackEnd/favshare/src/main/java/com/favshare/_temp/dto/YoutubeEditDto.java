@@ -1,6 +1,6 @@
 package com.favshare._temp.dto;
 
-import com.favshare._temp.entity.UserEntity;
+import com.favshare.user.entity.User;
 import com.favshare._temp.entity.YoutubeEntity;
 
 import lombok.Data;
@@ -18,8 +18,8 @@ public class YoutubeEditDto {
 	private String content;
 	private int feedId;
 
-	public YoutubeEditDto(UserEntity userEntity, YoutubeEntity youtubeEntity) {
-		this.userId = userEntity.getId();
+	public YoutubeEditDto(User user, YoutubeEntity youtubeEntity) {
+		this.userId = user.getId();
 		this.youtubeId = youtubeEntity.getId();
 	}
 

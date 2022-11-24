@@ -18,6 +18,6 @@ public class FeedDto {
 		this.name = feedEntity.getName();
 		this.isFirst = feedEntity.isFirst();
 		this.feedImageUrl = feedEntity.getFeedImageUrl();
-		this.userId = feedEntity.getUserEntity().getId();
+		this.userId = feedEntity.getUser().getId();
 	}
 }

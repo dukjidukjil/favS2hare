@@ -8,15 +8,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.favshare._temp.entity.FollowEntity;
-import com.favshare._temp.entity.UserEntity;
+import com.favshare.user.entity.User;
 
 public interface FollowRepository extends JpaRepository<FollowEntity, Integer> {
 
 	@Transactional 
 	@Modifying
 	@Query(value = "delete from follow where from_user_id = :fromUserId and to_user_id = :toUserId", nativeQuery = true)
-	public void deleteFollowByUserId(@Param("fromUserId") UserEntity fromUserId,
-			@Param("toUserId") UserEntity toUserId);
+	public void deleteFollowByUserId(@Param("fromUserId") User fromUserId,
+			@Param("toUserId") User toUserId);
 
 	@Query(value = "select count(*) from follow where from_user_id = :fromUserId and to_user_id = :toUserId", nativeQuery = true)
 	public int countFollowFByUserId(@Param("fromUserId") int fromUserId, @Param("toUserId") int toUserId);

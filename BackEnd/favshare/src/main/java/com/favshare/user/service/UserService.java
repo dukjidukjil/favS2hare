@@ -1,4 +1,4 @@
-package com.favshare._temp.service;
+package com.favshare.user.service;
 
 import java.util.ArrayList;
 
@@ -29,13 +29,13 @@ import com.favshare._temp.entity.InterestSongEntity;
 import com.favshare._temp.entity.PopEntity;
 import com.favshare._temp.entity.PopInFeedEntity;
 import com.favshare._temp.entity.SongEntity;
-import com.favshare._temp.entity.UserEntity;
+import com.favshare.user.entity.User;
 import com.favshare._temp.repository.FeedRepository;
 import com.favshare._temp.repository.FollowRepository;
 import com.favshare._temp.repository.InterestIdolRepository;
 import com.favshare._temp.repository.InterestSongRepository;
 import com.favshare._temp.repository.LikePopRepository;
-import com.favshare._temp.repository.UserRepository;
+import com.favshare.user.repository.UserRepository;
 
 @Service
 public class UserService {
@@ -62,82 +62,82 @@ public class UserService {
 	private InterestSongRepository interestSongRepository;
 
 	public UserAccountDto getByEmail(String email) {
-		UserEntity userEntity;
-		userEntity = userRepository.findByEmail(email);
-		UserAccountDto result = new UserAccountDto(userEntity);
+		User user;
+		user = userRepository.findByEmail(email);
+		UserAccountDto result = new UserAccountDto(user);
 		return result;
 	}
 
 	public void insertUser(UserSignUpDto userSignUpDto) {
-		UserEntity userEntity = UserEntity.builder().name(userSignUpDto.getName()).email(userSignUpDto.getEmail())
+		User user = User.builder().name(userSignUpDto.getName()).email(userSignUpDto.getEmail())
 				.password(userSignUpDto.getPassword()).nickname(userSignUpDto.getNickname())
 				.birthDate(userSignUpDto.getBirthDate()).phone(userSignUpDto.getPhone()).build();
-		userRepository.save(userEntity);
+		userRepository.save(user);
 	}
 
 	public void updatePassword(EmailPasswordDto emailPasswordDto) {
-		UserEntity userEntity;
-		userEntity = userRepository.findByEmail(emailPasswordDto.getEmail());
-		userEntity.changePassword(emailPasswordDto.getPassword());
-		userRepository.save(userEntity);
+		User user;
+		user = userRepository.findByEmail(emailPasswordDto.getEmail());
+		user.changePassword(emailPasswordDto.getPassword());
+		userRepository.save(user);
 	}
 
 	public UserProfileDto getUserProfileById(int id) {
-		UserEntity userEntity;
-		userEntity = userRepository.findById(id).get();
-		UserProfileDto result = new UserProfileDto(userEntity);
+		User user;
+		user = userRepository.findById(id).get();
+		UserProfileDto result = new UserProfileDto(user);
 		return result;
 	}
 
 	public void updateProfile(UserProfileDto userProfileDto) {
-		UserEntity userEntity;
-		userEntity = userRepository.findById(userProfileDto.getId()).get();
-		userEntity.changeProfile(userProfileDto.getNickname(), userProfileDto.getContent(),
+		User user;
+		user = userRepository.findById(userProfileDto.getId()).get();
+		user.changeProfile(userProfileDto.getNickname(), userProfileDto.getContent(),
 				userProfileDto.getProfileImageUrl());
-		userRepository.save(userEntity);
+		userRepository.save(user);
 	}
 
 	public UserInfoDto getUserInfoById(int id) {
-		UserEntity userEntity;
-		userEntity = userRepository.findById(id).get();
-		UserInfoDto result = new UserInfoDto(userEntity);
+		User user;
+		user = userRepository.findById(id).get();
+		UserInfoDto result = new UserInfoDto(user);
 		return result;
 
 	}
 
 	public void updateUserInfo(UserInfoDto userInfoDto) {
-		UserEntity userEntity;
-		userEntity = userRepository.findById(userInfoDto.getId()).get();
-		userEntity.changeUserInfo(userInfoDto.getName(), userInfoDto.getPassword(), userInfoDto.getPhone(),
+		User user;
+		user = userRepository.findById(userInfoDto.getId()).get();
+		user.changeUserInfo(userInfoDto.getName(), userInfoDto.getPassword(), userInfoDto.getPhone(),
 				userInfoDto.getBirthDate());
-		userRepository.save(userEntity);
+		userRepository.save(user);
 	}
 
 	public int[] countFollow(int userId) {
-		UserEntity userEntity = userRepository.findById(userId).get();
-		int followingNum = userEntity.getFromUserEntityList().size();
-		int followerNum = userEntity.getToUserEntityList().size();
+		User user = userRepository.findById(userId).get();
+		int followingNum = user.getFromUserEntityList().size();
+		int followerNum = user.getToUserEntityList().size();
 		return new int[] { followerNum, followingNum };
 	}
 
 	public List<FeedDto> getFeedList(int userId) {
-		UserEntity userEntity = userRepository.findById(userId).get();
-		List<FeedEntity> feedEntityList = userEntity.getFeedList();
+		User user = userRepository.findById(userId).get();
+		List<FeedEntity> feedEntityList = user.getFeedList();
 		List<FeedDto> feedDtoList = Arrays.asList(modelMapper.map(feedEntityList, FeedDto[].class));
 		return feedDtoList;
 	}
 
-	public void updateAuth(String email, String auth) {
-		UserEntity userEntity;
-		userEntity = userRepository.findByEmail(email);
-		userEntity.changeAuth(auth);
-		userRepository.save(userEntity);
-	}
+//	public void updateAuth(String email, String auth) {
+//		User user;
+//		user = userRepository.findByEmail(email);
+//		user.changeAuth(auth);
+//		userRepository.save(user);
+//	}
 
 	public List<PopDto> getAllPopList(FeedUserIdDto feedUserIdDto) {
-		UserEntity userEntity = userRepository.getById(feedUserIdDto.getUserId());
+		User user = userRepository.getById(feedUserIdDto.getUserId());
 
-		List<PopDto> result = Arrays.asList(modelMapper.map(userEntity.getPopList(), PopDto[].class));
+		List<PopDto> result = Arrays.asList(modelMapper.map(user.getPopList(), PopDto[].class));
 
 		return result;
 	}
@@ -172,11 +172,11 @@ public class UserService {
 
 	}
 
-	public String getUserAuthByEmail(String email) {
-		UserEntity userEntity;
-		userEntity = userRepository.findByEmail(email);
-		return userEntity.getAuth();
-	}
+//	public String getUserAuthByEmail(String email) {
+//		User user;
+//		user = userRepository.findByEmail(email);
+//		return user.getAuth();
+//	}
 
 	public void deleteByUserId(int userId) {
 		userRepository.deleteById(userId);
@@ -184,14 +184,14 @@ public class UserService {
 	}
 
 	public List<FriendFeedDto> getFollowingList(int userId) {
-		UserEntity userEntity = userRepository.findById(userId).get();
-		List<FollowEntity> followEntityList = userEntity.getFromUserEntityList();
+		User user = userRepository.findById(userId).get();
+		List<FollowEntity> followEntityList = user.getFromUserEntityList();
 		List<FriendFeedDto> result = new ArrayList<FriendFeedDto>();
 		for (int i = 0; i < followEntityList.size(); i++) {
 
-			UserEntity person = followEntityList.get(i).getToUserEntity();
+			User person = followEntityList.get(i).getToUser();
 
-			List<PopEntity> temp = followEntityList.get(i).getToUserEntity().getPopList();
+			List<PopEntity> temp = followEntityList.get(i).getToUser().getPopList();
 
 			UserProfileDto userProfileDto = getUserProfileById(person.getId());
 
@@ -207,11 +207,11 @@ public class UserService {
 	}
 
 	public List<UserProfileDto> getFollowerList(int userId) {
-		UserEntity userEntity = userRepository.findById(userId).get();
-		List<FollowEntity> followEntityList = userEntity.getToUserEntityList();
-		List<UserEntity> followerList = new ArrayList<UserEntity>();
+		User user = userRepository.findById(userId).get();
+		List<FollowEntity> followEntityList = user.getToUserEntityList();
+		List<User> followerList = new ArrayList<User>();
 		for (int i = 0; i < followEntityList.size(); i++) {
-			followerList.add(followEntityList.get(i).getFromUserEntity());
+			followerList.add(followEntityList.get(i).getFromUser());
 		}
 
 		List<UserProfileDto> UserProfileDtoList = Arrays.asList(modelMapper.map(followerList, UserProfileDto[].class));
@@ -240,9 +240,9 @@ public class UserService {
 	}
 
 	public boolean isExistUserByEmail(String email) {
-		UserEntity userEntity;
-		userEntity = userRepository.findByEmail(email);
-		if (userEntity != null) {
+		User user;
+		user = userRepository.findByEmail(email);
+		if (user != null) {
 			return true;
 		} else {
 			return false;
@@ -251,8 +251,8 @@ public class UserService {
 
 	public List<UserProfileDto> userDtoListByKeyword(String keyword) {
 
-		List<UserEntity> userEntityList = userRepository.findByKeywordContains(keyword);
-		List<UserProfileDto> userDtoList = Arrays.asList(modelMapper.map(userEntityList, UserProfileDto[].class));
+		List<User> userList = userRepository.findByKeywordContains(keyword);
+		List<UserProfileDto> userDtoList = Arrays.asList(modelMapper.map(userList, UserProfileDto[].class));
 		return userDtoList;
 	}
 

@@ -7,7 +7,7 @@ import com.favshare._temp.dto.PopDto;
 import com.favshare._temp.dto.input.UserIdMessageDto;
 import com.favshare._temp.dto.input.UserProfileDto;
 import com.favshare._temp.service.PopService;
-import com.favshare._temp.service.UserService;
+import com.favshare.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

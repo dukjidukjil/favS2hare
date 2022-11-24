@@ -1,6 +1,8 @@
 package com.favshare._temp.entity;
 
 import javax.persistence.*;
+
+import com.favshare.user.entity.User;
 import lombok.*;
 
 @Entity
@@ -21,12 +23,12 @@ public class InterestIdolEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false)
-	private UserEntity userEntity;
+	private User user;
 
-	public InterestIdolEntity(IdolEntity idolEntity, UserEntity userEntity) {
+	public InterestIdolEntity(IdolEntity idolEntity, User user) {
 		super();
 		this.idolEntity = idolEntity;
-		this.userEntity = userEntity;
+		this.user = user;
 	}
 
 }

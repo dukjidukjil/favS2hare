@@ -7,7 +7,7 @@ import com.favshare._temp.dto.CommentDto;
 import com.favshare._temp.entity.CommentEntity;
 import com.favshare._temp.service.CommentService;
 import com.favshare._temp.service.LikeCommentService;
-import com.favshare._temp.service.UserService;
+import com.favshare.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +46,7 @@ public class CommentController {
 
 			for (int i = 0; i < commentEntityList.size(); i++) {
 				CommentEntity commentEntity = commentEntityList.get(i);
-				UserProfileDto user = userService.getUserProfileById(commentEntity.getUserEntity().getId());
+				UserProfileDto user = userService.getUserProfileById(commentEntity.getUser().getId());
 				boolean isLiked = likeCommentService.isLiked(userId, commentEntity.getId());
 
 				result.add(new CommentDto(commentEntity, user.getNickname(), user.getProfileImageUrl(), isLiked));

@@ -8,10 +8,10 @@ import com.favshare._temp.dto.input.UserCommentIdDto;
 import com.favshare._temp.dto.input.UserPopContentIdDto;
 import com.favshare._temp.entity.CommentEntity;
 import com.favshare._temp.entity.PopEntity;
-import com.favshare._temp.entity.UserEntity;
+import com.favshare.user.entity.User;
 import com.favshare._temp.repository.CommentRepository;
 import com.favshare._temp.repository.PopRepository;
-import com.favshare._temp.repository.UserRepository;
+import com.favshare.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,11 +33,11 @@ public class CommentService {
 
 	public void insertComment(UserPopContentIdDto userPopContentIdDto) {
 
-		UserEntity userEntity = userRepository.findById(userPopContentIdDto.getUserId()).get();
+		User user = userRepository.findById(userPopContentIdDto.getUserId()).get();
 		PopEntity popEntity = popRepository.findById(userPopContentIdDto.getPopId()).get();
 
 		CommentEntity commentEntity = CommentEntity.builder().content(userPopContentIdDto.getContent())
-				.createDate(LocalDateTime.now()).isModify(false).userEntity(userEntity).popEntity(popEntity).build();
+				.createDate(LocalDateTime.now()).isModify(false).user(user).popEntity(popEntity).build();
 
 		commentRepository.save(commentEntity);
 	}

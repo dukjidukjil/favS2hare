@@ -7,7 +7,7 @@ import com.favshare._temp.dto.FollowDto;
 import com.favshare._temp.dto.input.FromUserToUserDto;
 import com.favshare._temp.entity.FollowEntity;
 import com.favshare._temp.service.FollowService;
-import com.favshare._temp.service.UserService;
+import com.favshare.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,10 +40,10 @@ public class UserFollowController {
 			List<FollowDto> result = new ArrayList<>();
 
 			for (int i = 0; i < followEntityList.size(); i++) {
-				int fromUserId = followEntityList.get(i).getFromUserEntity().getId();
-				int toUserId = followEntityList.get(i).getToUserEntity().getId();
-				String nickname = followEntityList.get(i).getToUserEntity().getNickname();
-				String profileImageUrl = followEntityList.get(i).getToUserEntity().getProfileImageUrl();
+				int fromUserId = followEntityList.get(i).getFromUser().getId();
+				int toUserId = followEntityList.get(i).getToUser().getId();
+				String nickname = followEntityList.get(i).getToUser().getNickname();
+				String profileImageUrl = followEntityList.get(i).getToUser().getProfileImageUrl();
 				result.add(new FollowDto(fromUserId, toUserId, nickname, false, profileImageUrl));
 			}
 
@@ -63,11 +63,11 @@ public class UserFollowController {
 			List<FollowDto> result = new ArrayList<>();
 
 			for (int i = 0; i < followEntityList.size(); i++) {
-				int fromUserId = followEntityList.get(i).getFromUserEntity().getId();
-				int toUserId = followEntityList.get(i).getToUserEntity().getId();
-				String nickname = followEntityList.get(i).getFromUserEntity().getNickname();
+				int fromUserId = followEntityList.get(i).getFromUser().getId();
+				int toUserId = followEntityList.get(i).getToUser().getId();
+				String nickname = followEntityList.get(i).getFromUser().getNickname();
 				boolean isFollowForFollow = userService.getFollowForFollow(userId, fromUserId);
-				String profileImageUrl = followEntityList.get(i).getFromUserEntity().getProfileImageUrl();
+				String profileImageUrl = followEntityList.get(i).getFromUser().getProfileImageUrl();
 				result.add(new FollowDto(fromUserId, toUserId, nickname, isFollowForFollow, profileImageUrl));
 			}
 

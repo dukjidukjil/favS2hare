@@ -3,7 +3,7 @@ package com.favshare._temp.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.favshare._temp.entity.UserEntity;
+import com.favshare.user.entity.User;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,8 +17,8 @@ public class YoutubeInfoDto {
 
 	private List<FeedDto> feedList = new ArrayList<>();
 
-	public YoutubeInfoDto(UserEntity userEntity, String url) {
-		this.userId = userEntity.getId();
+	public YoutubeInfoDto(User user, String url) {
+		this.userId = user.getId();
 		this.url = url;
 	}
 }

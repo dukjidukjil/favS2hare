@@ -1,6 +1,6 @@
 package com.favshare._temp.dto.input;
 
-import com.favshare._temp.entity.UserEntity;
+import com.favshare.user.entity.User;
 
 import lombok.*;
 
@@ -16,11 +16,11 @@ public class UserProfileDto {
 	private int followerNum;
 	private int followingNum;
 
-	public UserProfileDto(UserEntity userEntity) {
-		this.id = userEntity.getId();
-		this.nickname = userEntity.getNickname();
-		this.content = userEntity.getContent();
-		this.profileImageUrl = userEntity.getProfileImageUrl();
+	public UserProfileDto(User user) {
+		this.id = user.getId();
+		this.nickname = user.getNickname();
+		this.content = user.getContent();
+		this.profileImageUrl = user.getProfileImageUrl();
 
 	}
 

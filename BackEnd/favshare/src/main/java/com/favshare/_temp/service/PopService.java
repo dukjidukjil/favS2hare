@@ -24,7 +24,7 @@ import com.favshare._temp.entity.InterestSongEntity;
 import com.favshare._temp.entity.PopEntity;
 import com.favshare._temp.entity.PopInFeedEntity;
 import com.favshare._temp.entity.ShowPopEntity;
-import com.favshare._temp.entity.UserEntity;
+import com.favshare.user.entity.User;
 import com.favshare._temp.entity.YoutubeEntity;
 import com.favshare._temp.repository.FeedRepository;
 import com.favshare._temp.repository.IdolRepository;
@@ -34,7 +34,7 @@ import com.favshare._temp.repository.LikePopRepository;
 import com.favshare._temp.repository.PopInFeedRepository;
 import com.favshare._temp.repository.PopRepository;
 import com.favshare._temp.repository.ShowPopRepository;
-import com.favshare._temp.repository.UserRepository;
+import com.favshare.user.repository.UserRepository;
 import com.favshare._temp.repository.YoutubeRepository;
 
 @Service
@@ -121,7 +121,7 @@ public class PopService {
 	}
 
 	public void insertPop(YoutubeEditPopDto youtubeEditPopDto) {
-		UserEntity userEntity = userRepository.findById(youtubeEditPopDto.getUserId()).get();
+		User user = userRepository.findById(youtubeEditPopDto.getUserId()).get();
 		YoutubeEntity youtubeEntity = youtubeRepository.findByUrl(youtubeEditPopDto.getYoutubeUrl());
 
 		// youtube가 아직데이터 베이스에 없을 시 데이터베이스에 넣어주기
@@ -136,7 +136,7 @@ public class PopService {
 		PopEntity popEntity = PopEntity.builder().name(youtubeEditPopDto.getName())
 				.startSecond(youtubeEditPopDto.getStartSecond()).endSecond(youtubeEditPopDto.getEndSecond())
 				.content(youtubeEditPopDto.getContent()).createDate(LocalDateTime.now())
-				.views(youtubeEditPopDto.getViews()).userEntity(userEntity).youtubeEntity(youtubeEntity).build();
+				.views(youtubeEditPopDto.getViews()).user(user).youtubeEntity(youtubeEntity).build();
 		popRepository.save(popEntity);
 
 		// popinfeed에도 넣어준다
@@ -151,8 +151,8 @@ public class PopService {
 	}
 
 	public int getPopCount(int userId) {
-		UserEntity userEntity = userRepository.findById(userId).get();
-		return userEntity.getPopList().size();
+		User user = userRepository.findById(userId).get();
+		return user.getPopList().size();
 	}
 
 	public void deletePop(List<Integer> popIdList) {
@@ -185,7 +185,7 @@ public class PopService {
 
 			value[0] = (int) (Math.log10(popEntityList.get(i).getViews()) * 100);
 			value[1] = (int) (Math.log10(popEntityList.get(i).getLikePopList().size()) * 100);
-			value[2] = (int) (Math.log10(popEntityList.get(i).getUserEntity().getToUserEntityList().size()) * 100);
+			value[2] = (int) (Math.log10(popEntityList.get(i).getUser().getToUserEntityList().size()) * 100);
 
 			maxValue[0] = Math.max(maxValue[0], value[0]);
 			maxValue[1] = Math.max(maxValue[1], value[1]);
@@ -261,7 +261,7 @@ public class PopService {
 
 			value[0] = (int) (Math.log10(popEntityList.get(i).getViews()) * 100);
 			value[1] = (int) (Math.log10(popEntityList.get(i).getLikePopList().size()) * 100);
-			value[2] = (int) (Math.log10(popEntityList.get(i).getUserEntity().getToUserEntityList().size()) * 100);
+			value[2] = (int) (Math.log10(popEntityList.get(i).getUser().getToUserEntityList().size()) * 100);
 
 			maxValue[0] = Math.max(maxValue[0], value[0]);
 			maxValue[1] = Math.max(maxValue[1], value[1]);
@@ -299,7 +299,7 @@ public class PopService {
 
 		List<Integer> result = new ArrayList<Integer>();
 		for (int i = 0; i < interestIdolEntityList.size(); i++) {
-			result.add(interestIdolEntityList.get(i).getUserEntity().getId());
+			result.add(interestIdolEntityList.get(i).getUser().getId());
 		}
 		return result;
 	}
@@ -310,14 +310,14 @@ public class PopService {
 
 		List<Integer> result = new ArrayList<Integer>();
 		for (int i = 0; i < interestSongEntityList.size(); i++) {
-			result.add(interestSongEntityList.get(i).getUserEntity().getId());
+			result.add(interestSongEntityList.get(i).getUser().getId());
 		}
 		return result;
 	}
 
 	public List<PopDto> popDtoListByUserId(int userId) {
-		UserEntity userEntity = userRepository.findById(userId).get();
-		List<PopEntity> popEntity = userEntity.getPopList();
+		User user = userRepository.findById(userId).get();
+		List<PopEntity> popEntity = user.getPopList();
 
 		List<PopDto> popDtoList = Arrays.asList(modelMapper.map(popEntity, PopDto[].class));
 		return popDtoList;
@@ -349,9 +349,9 @@ public class PopService {
 
 	public void insertShowPop(int popId, int userId) {
 		PopEntity popEntity = popRepository.getById(popId);
-		UserEntity userEntity = userRepository.getById(userId);
+		User user = userRepository.getById(userId);
 
-		ShowPopEntity showPopEntity = ShowPopEntity.builder().popEntity(popEntity).userEntity(userEntity).build();
+		ShowPopEntity showPopEntity = ShowPopEntity.builder().popEntity(popEntity).user(user).build();
 		showPopRepository.save(showPopEntity);
 
 	}

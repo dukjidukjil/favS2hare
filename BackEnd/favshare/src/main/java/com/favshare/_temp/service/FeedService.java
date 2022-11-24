@@ -4,9 +4,9 @@ import com.favshare._temp.dto.input.FeedUserIdDto;
 import com.favshare._temp.dto.input.IdFeedImageUrlDto;
 import com.favshare._temp.dto.input.IdNameDto;
 import com.favshare._temp.entity.FeedEntity;
-import com.favshare._temp.entity.UserEntity;
+import com.favshare.user.entity.User;
 import com.favshare._temp.repository.FeedRepository;
-import com.favshare._temp.repository.UserRepository;
+import com.favshare.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +21,12 @@ public class FeedService {
 
 	public void insertFeed(int userId) {
 		FeedEntity feedEntity = new FeedEntity();
-		UserEntity userEntity = userRepository.findById(userId).get();
+		User user = userRepository.findById(userId).get();
 		if (feedRepository.countFeedByUserId(userId) == 0) {
-			feedEntity = FeedEntity.builder().name("피드").isFirst(true).feedImageUrl(null).userEntity(userEntity)
+			feedEntity = FeedEntity.builder().name("피드").isFirst(true).feedImageUrl(null).user(user)
 					.build();
 		} else {
-			feedEntity = FeedEntity.builder().name("피드").isFirst(false).feedImageUrl(null).userEntity(userEntity)
+			feedEntity = FeedEntity.builder().name("피드").isFirst(false).feedImageUrl(null).user(user)
 					.build();
 		}
 		feedRepository.save(feedEntity);

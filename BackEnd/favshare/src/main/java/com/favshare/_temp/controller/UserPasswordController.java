@@ -8,7 +8,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import com.favshare._temp.dto.input.EmailPasswordDto;
-import com.favshare._temp.service.UserService;
+import com.favshare.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -90,19 +90,19 @@ public class UserPasswordController {
 
 	}
 
-	@ApiOperation(value = "인증번호 입력 후 확인 클릭시", response = ResponseEntity.class)
-	@PostMapping("/auth")
-	public ResponseEntity<String> checkAuth(@RequestBody HashMap<String, String> authInfo) {
-		try {
-			String result = userService.getUserAuthByEmail(authInfo.get("email"));
-			if (authInfo.get("auth").equals(result)) {
-				return new ResponseEntity<>("success", HttpStatus.OK);
-			} else {
-				return new ResponseEntity<>("fail", HttpStatus.OK);
-			}
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-	}
+//	@ApiOperation(value = "인증번호 입력 후 확인 클릭시", response = ResponseEntity.class)
+//	@PostMapping("/auth")
+//	public ResponseEntity<String> checkAuth(@RequestBody HashMap<String, String> authInfo) {
+//		try {
+//			String result = userService.getUserAuthByEmail(authInfo.get("email"));
+//			if (authInfo.get("auth").equals(result)) {
+//				return new ResponseEntity<>("success", HttpStatus.OK);
+//			} else {
+//				return new ResponseEntity<>("fail", HttpStatus.OK);
+//			}
+//		} catch (Exception e) {
+//			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//		}
+//	}
 
 }

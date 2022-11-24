@@ -24,7 +24,7 @@ public class YoutubeEditPopDto {
 	private boolean isMuted;
 
 	public YoutubeEditPopDto(PopEntity popEntity, FeedEntity feedEntity) {
-		this.userId = popEntity.getUserEntity().getId();
+		this.userId = popEntity.getUser().getId();
 		this.youtubeUrl = popEntity.getYoutubeEntity().getUrl();
 		this.feedId = feedEntity.getId();
 		this.name = popEntity.getName();

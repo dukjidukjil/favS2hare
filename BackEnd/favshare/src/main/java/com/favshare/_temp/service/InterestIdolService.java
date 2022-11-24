@@ -5,10 +5,10 @@ import java.util.List;
 
 import com.favshare._temp.entity.IdolEntity;
 import com.favshare._temp.entity.InterestIdolEntity;
-import com.favshare._temp.entity.UserEntity;
+import com.favshare.user.entity.User;
 import com.favshare._temp.repository.IdolRepository;
 import com.favshare._temp.repository.InterestIdolRepository;
-import com.favshare._temp.repository.UserRepository;
+import com.favshare.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,12 +25,12 @@ public class InterestIdolService {
 
 	public void addIdolFavorite(int userId, int idolId) {
 		IdolEntity idolEntity = idolRepository.findById(idolId).get();
-		UserEntity userEntity = userRepository.findById(userId).get();
+		User user = userRepository.findById(userId).get();
 
-		int duplicate = interestIdolRepository.findByIdolIdUserId(userEntity.getId(), idolEntity.getId());
+		int duplicate = interestIdolRepository.findByIdolIdUserId(user.getId(), idolEntity.getId());
 		if (duplicate >= 1) {
 		} else {
-			InterestIdolEntity result = new InterestIdolEntity(idolEntity, userEntity);
+			InterestIdolEntity result = new InterestIdolEntity(idolEntity, user);
 			interestIdolRepository.save(result);
 		}
 

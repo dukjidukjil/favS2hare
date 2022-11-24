@@ -6,10 +6,10 @@ import java.util.List;
 import com.favshare._temp.dto.YoutubeDto;
 import com.favshare._temp.dto.input.YoutubeUserIdDto;
 import com.favshare._temp.entity.StoreYoutubeEntity;
-import com.favshare._temp.entity.UserEntity;
+import com.favshare.user.entity.User;
 import com.favshare._temp.entity.YoutubeEntity;
 import com.favshare._temp.repository.StoreYoutubeRepository;
-import com.favshare._temp.repository.UserRepository;
+import com.favshare.user.repository.UserRepository;
 import com.favshare._temp.repository.YoutubeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,15 +31,15 @@ public class StoreYoutubeService {
 		insertYoutube(youtubeUserIdDto);
 
 		StoreYoutubeEntity storeYoutubeEntity = new StoreYoutubeEntity();
-		UserEntity userEntity = userRepository.findById(youtubeUserIdDto.getUserId()).get();
+		User user = userRepository.findById(youtubeUserIdDto.getUserId()).get();
 		YoutubeEntity youtubeEntity = youtubeRepository.findByUrl(youtubeUserIdDto.getYoutubeUrl());
 
-		if (storeYoutubeRepository.isBookmarked(userEntity.getId(), youtubeEntity.getId()) < 1) {
+		if (storeYoutubeRepository.isBookmarked(user.getId(), youtubeEntity.getId()) < 1) {
 
 			if (youtubeEntity == null) {
 				youtubeEntity = YoutubeEntity.builder().url(youtubeUserIdDto.getYoutubeUrl()).build();
 			}
-			storeYoutubeEntity = StoreYoutubeEntity.builder().userEntity(userEntity).youtubeEntity(youtubeEntity)
+			storeYoutubeEntity = StoreYoutubeEntity.builder().user(user).youtubeEntity(youtubeEntity)
 					.build();
 
 			storeYoutubeRepository.save(storeYoutubeEntity);
@@ -55,10 +55,10 @@ public class StoreYoutubeService {
 	}
 
 	public List<YoutubeDto> getYoutubeBookmarkById(int id) {
-		UserEntity userEntity;
-		userEntity = userRepository.findById(id).get();
+		User user;
+		user = userRepository.findById(id).get();
 
-		List<StoreYoutubeEntity> storeYoutubeList = userEntity.getStoreYoutubeList();
+		List<StoreYoutubeEntity> storeYoutubeList = user.getStoreYoutubeList();
 
 		List<YoutubeDto> result = new ArrayList<YoutubeDto>();
 		for (int i = 0; i < storeYoutubeList.size(); i++) {

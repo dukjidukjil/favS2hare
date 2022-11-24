@@ -2,7 +2,7 @@ package com.favshare._temp.controller;
 
 import com.favshare._temp.dto.input.IdPasswordDto;
 import com.favshare._temp.dto.input.UserInfoDto;
-import com.favshare._temp.service.UserService;
+import com.favshare.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

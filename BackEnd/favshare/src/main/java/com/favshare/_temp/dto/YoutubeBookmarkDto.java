@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.favshare._temp.entity.StoreYoutubeEntity;
-import com.favshare._temp.entity.UserEntity;
+import com.favshare.user.entity.User;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,8 +17,8 @@ public class YoutubeBookmarkDto {
 
 	private List<StoreYoutubeEntity> storeYoutubeList = new ArrayList<>();
 
-	public YoutubeBookmarkDto(UserEntity userEntity) {
-		this.userId = userEntity.getId();
-		this.storeYoutubeList = userEntity.getStoreYoutubeList();
+	public YoutubeBookmarkDto(User user) {
+		this.userId = user.getId();
+		this.storeYoutubeList = user.getStoreYoutubeList();
 	}
 }

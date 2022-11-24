@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.favshare._temp.entity.UserEntity;
+import com.favshare.user.entity.User;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,16 +23,16 @@ public class UserAllDto {
 	private String content;
 	private String profileImageUrl;
 
-	public UserAllDto(UserEntity userEntity) {
-		this.id = userEntity.getId();
-		this.name = userEntity.getName();
-		this.email = userEntity.getEmail();
-		this.password = userEntity.getPassword();
-		this.nickname = userEntity.getNickname();
-		this.birthDate = userEntity.getBirthDate();
-		this.phone = userEntity.getPhone();
-		this.content = userEntity.getContent();
-		this.profileImageUrl = userEntity.getProfileImageUrl();
+	public UserAllDto(User user) {
+		this.id = user.getId();
+		this.name = user.getName();
+		this.email = user.getEmail();
+		this.password = user.getPassword();
+		this.nickname = user.getNickname();
+		this.birthDate = user.getBirthDate();
+		this.phone = user.getPhone();
+		this.content = user.getContent();
+		this.profileImageUrl = user.getProfileImageUrl();
 	}
 
 }

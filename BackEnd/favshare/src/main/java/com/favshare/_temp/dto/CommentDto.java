@@ -26,7 +26,7 @@ public class CommentDto {
 		this.content = commentEntity.getContent();
 		this.createDate = commentEntity.getCreateDate();
 		this.isModify = commentEntity.isModify();
-		this.userId = commentEntity.getUserEntity().getId();
+		this.userId = commentEntity.getUser().getId();
 		this.popId = commentEntity.getPopEntity().getId();
 		this.nickname = nickname;
 		this.profileImageUrl = profileImageUrl;

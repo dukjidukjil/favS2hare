@@ -15,7 +15,7 @@ import com.favshare._temp.dto.YoutubeDetailDto;
 import com.favshare._temp.dto.YoutubeInfoDto;
 import com.favshare._temp.dto.input.YoutubeUserIdDto;
 import com.favshare._temp.entity.InterestIdolEntity;
-import com.favshare._temp.entity.UserEntity;
+import com.favshare.user.entity.User;
 import com.favshare._temp.entity.YoutubeEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
 import com.favshare._temp.repository.IdolRepository;
 import com.favshare._temp.repository.InterestIdolRepository;
 import com.favshare._temp.repository.StoreYoutubeRepository;
-import com.favshare._temp.repository.UserRepository;
+import com.favshare.user.repository.UserRepository;
 import com.favshare._temp.repository.YoutubeRepository;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpRequest;
@@ -181,10 +181,10 @@ public class YoutubeService {
 	}
 
 	public YoutubeInfoDto getEditInfoByUrl(YoutubeUserIdDto youtubeUserIdDto) {
-		UserEntity userEntity = userRepository.findById(youtubeUserIdDto.getUserId()).get();
+		User user = userRepository.findById(youtubeUserIdDto.getUserId()).get();
 	
-		YoutubeInfoDto result = new YoutubeInfoDto(userEntity, youtubeUserIdDto.getYoutubeUrl());
-		List<FeedDto> feedList = Arrays.asList(modelMapper.map(userEntity.getFeedList(), FeedDto[].class));
+		YoutubeInfoDto result = new YoutubeInfoDto(user, youtubeUserIdDto.getYoutubeUrl());
+		List<FeedDto> feedList = Arrays.asList(modelMapper.map(user.getFeedList(), FeedDto[].class));
 
 		result.setFeedList(feedList);
 		return result;

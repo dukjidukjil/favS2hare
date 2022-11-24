@@ -5,10 +5,10 @@ import java.util.List;
 
 import com.favshare._temp.entity.InterestSongEntity;
 import com.favshare._temp.entity.SongEntity;
-import com.favshare._temp.entity.UserEntity;
+import com.favshare.user.entity.User;
 import com.favshare._temp.repository.InterestSongRepository;
 import com.favshare._temp.repository.SongRepository;
-import com.favshare._temp.repository.UserRepository;
+import com.favshare.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,12 +25,12 @@ public class InterestSongService {
 
 	public void addSongFavorite(int userId, int songId) {
 		SongEntity songEntity = songRepository.findById(songId).get();
-		UserEntity userEntity = userRepository.findById(userId).get();
+		User user = userRepository.findById(userId).get();
 
-		int duplicate = interestSongRepository.findBySongIdUserId(userEntity.getId(), songEntity.getId());
+		int duplicate = interestSongRepository.findBySongIdUserId(user.getId(), songEntity.getId());
 		if (duplicate >= 1) {
 		} else {
-			InterestSongEntity result = new InterestSongEntity(songEntity, userEntity);
+			InterestSongEntity result = new InterestSongEntity(songEntity, user);
 			interestSongRepository.save(result);
 		}
 

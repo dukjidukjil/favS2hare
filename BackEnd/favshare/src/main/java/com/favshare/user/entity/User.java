@@ -1,23 +1,21 @@
-package com.favshare._temp.entity;
+package com.favshare.user.entity;
 
 import java.util.*;
 
 import javax.persistence.*;
 
+import com.favshare._temp.entity.*;
+import com.favshare.global.baseEntity.BaseEntity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.*;
 
-@Entity
-@Table(name = "user")
-@AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@ToString(exclude = { "popList", "commentList", "feedList", "likePopList", "showPopList", "storeYoutubeList",
-		"showYoutubeList", "likeCommentList", "interestIdolList", "interestSongList", "fromUserEntityList",
-		"toUserEntityList" })
 @Builder
-public class UserEntity {
+@AllArgsConstructor
+@Getter
+@Entity
+public class User extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
@@ -38,7 +36,7 @@ public class UserEntity {
 	@Column(name = "profile_image_url")
 	private String profileImageUrl;
 
-	private String auth;
+//	private String auth;
 
 	@OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
 	private List<PopEntity> popList = new ArrayList<>();
@@ -80,9 +78,9 @@ public class UserEntity {
 		this.password = password;
 	}
 
-	public void changeAuth(String auth) {
-		this.auth = auth;
-	}
+//	public void changeAuth(String auth) {
+//		this.auth = auth;
+//	}
 
 	public void changeProfile(String nickname, String content, String profileImageUrl) {
 		this.nickname = nickname;

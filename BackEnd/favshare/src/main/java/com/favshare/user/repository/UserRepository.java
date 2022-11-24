@@ -1,4 +1,4 @@
-package com.favshare._temp.repository;
+package com.favshare.user.repository;
 
 import java.util.List;
 
@@ -7,14 +7,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.favshare._temp.entity.UserEntity;
+import com.favshare.user.entity.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity, Integer> {
+public interface UserRepository extends JpaRepository<User, Integer> {
 
-	UserEntity findByEmail(String email);
+	User findByEmail(String email);
 
 	@Query(value = "SELECT * FROM user where nickname LIKE CONCAT('%',:keyword,'%')", nativeQuery = true)
-	public List<UserEntity> findByKeywordContains(@Param("keyword") String keyword);
+	public List<User> findByKeywordContains(@Param("keyword") String keyword);
 
 }

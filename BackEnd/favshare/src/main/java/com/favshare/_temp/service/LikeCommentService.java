@@ -4,9 +4,9 @@ package com.favshare._temp.service;
 import com.favshare._temp.dto.input.UserCommentIdDto;
 import com.favshare._temp.entity.CommentEntity;
 import com.favshare._temp.entity.LikeCommentEntity;
-import com.favshare._temp.entity.UserEntity;
+import com.favshare.user.entity.User;
 import com.favshare._temp.repository.CommentRepository;
-import com.favshare._temp.repository.UserRepository;
+import com.favshare.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,7 +31,7 @@ public class LikeCommentService {
 
 		LikeCommentEntity likeCommentEntity;
 
-		UserEntity userEntity = userRepository.findById(userCommentIdDto.getUserId()).get();
+		User user = userRepository.findById(userCommentIdDto.getUserId()).get();
 		CommentEntity commentEntity = commentRepository.findById(userCommentIdDto.getCommentId()).get();
 
 		int duplicate = likeCommentRepository.findByUserIdCommentID(userId, commentEntity.getId());
@@ -39,7 +39,7 @@ public class LikeCommentService {
 
 		} else {
 
-			likeCommentEntity = LikeCommentEntity.builder().userEntity(userEntity).commentEntity(commentEntity).build();
+			likeCommentEntity = LikeCommentEntity.builder().user(user).commentEntity(commentEntity).build();
 			likeCommentRepository.save(likeCommentEntity);
 		}
 

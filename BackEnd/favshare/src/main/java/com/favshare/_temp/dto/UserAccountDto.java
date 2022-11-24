@@ -1,6 +1,6 @@
 package com.favshare._temp.dto;
 
-import com.favshare._temp.entity.UserEntity;
+import com.favshare.user.entity.User;
 
 import lombok.*;
 
@@ -11,10 +11,10 @@ public class UserAccountDto {
 	private String email;
 	private String password;
 
-	public UserAccountDto(UserEntity userEntity) {
-		this.id = userEntity.getId();
-		this.email = userEntity.getEmail();
-		this.password = userEntity.getPassword();
+	public UserAccountDto(User user) {
+		this.id = user.getId();
+		this.email = user.getEmail();
+		this.password = user.getPassword();
 
 	}
 
