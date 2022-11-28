@@ -1,6 +1,9 @@
 package com.favshare.popsInFeed.entity;
 
 import javax.persistence.*;
+
+import com.favshare.feed.entity.Feed;
+import com.favshare.pops.entity.PopEntity;
 import lombok.*;
 
 @Entity
@@ -15,12 +18,12 @@ public class PopInFeedEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "pop_id", nullable = false)
-//	private PopEntity popEntity;
-//
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "feed_id", nullable = false)
-//	private FeedEntity feedEntity;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "pop_id", nullable = false)
+	private PopEntity popEntity;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "feed_id", nullable = false)
+	private Feed feedEntity;
 
 }

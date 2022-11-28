@@ -3,7 +3,7 @@ package com.favshare._temp.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.favshare._temp.entity.StoreYoutubeEntity;
+import com.favshare.youtube.entity.StoreYoutubeEntity;
 import com.favshare.user.entity.User;
 
 import lombok.Data;

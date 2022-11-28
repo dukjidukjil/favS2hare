@@ -1,6 +1,6 @@
 package com.favshare._temp.dto;
 
-import com.favshare._temp.entity.IdolEntity;
+import com.favshare.idol.entity.IdolEntity;
 
 import lombok.*;
 

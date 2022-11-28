@@ -1,7 +1,6 @@
 package com.favshare._temp.dto;
 
-import com.favshare._temp.entity.FeedEntity;
-
+import com.favshare.feed.entity.Feed;
 import lombok.*;
 
 @Data
@@ -13,7 +12,7 @@ public class FeedDto {
 	private String feedImageUrl;
 	private int userId;
 
-	public FeedDto(FeedEntity feedEntity) {
+	public FeedDto(Feed feedEntity) {
 		this.id = feedEntity.getId();
 		this.name = feedEntity.getName();
 		this.isFirst = feedEntity.isFirst();

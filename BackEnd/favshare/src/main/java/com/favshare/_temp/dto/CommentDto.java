@@ -2,7 +2,7 @@ package com.favshare._temp.dto;
 
 import java.time.LocalDateTime;
 
-import com.favshare._temp.entity.CommentEntity;
+import com.favshare.pops.entity.CommentEntity;
 
 import lombok.*;
 
