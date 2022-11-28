@@ -1,11 +1,11 @@
 package com.favshare.feed.controller;
 
 
+import com.favshare.feed.dto.CreateFeedRequest;
 import com.favshare.feed.dto.ModifyFeedImageRequest;
-import com.favshare.feed.dto.ModifyFeedRequest;
+import com.favshare.feed.dto.ModifyFeedNameRequest;
 import com.favshare.feed.dto.ModifyFirstFeedRequest;
 import com.favshare.feed.service.FeedService;
-import com.favshare.global.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,17 +20,13 @@ public class FeedController {
 	private final FeedService feedService;
 
 	@ApiOperation(value = "Feed 설정 화면 - 피드 추가하기", response = ResponseEntity.class)
-	@PostMapping("/{userId}")
-	public ResponseEntity addNewFeed(@PathVariable int userId) {
+	@PostMapping("/create")
+	public ResponseEntity addNewFeed(@RequestBody CreateFeedRequest createFeedRequest) {
 		try {
-			feedService.insertFeed(userId);
-			return ResponseEntity.status(HttpStatus.OK).body(
-					new ResponseDto(HttpStatus.OK.value(),"피드 추가 완료","")
-			);
+			feedService.insertFeed(createFeedRequest);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-					new ResponseDto(HttpStatus.BAD_REQUEST.value(),"피드 추가 실패","")
-			);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
 
@@ -39,28 +35,20 @@ public class FeedController {
 	public ResponseEntity deleteFeed(@PathVariable int feedId) {
 		try {
 			feedService.deleteFeed(feedId);
-			return ResponseEntity.status(HttpStatus.OK).body(
-					new ResponseDto(HttpStatus.OK.value(),"피드 삭제 완료","")
-			);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-					new ResponseDto(HttpStatus.BAD_REQUEST.value(),"피드 삭제 실패","")
-			);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
 
 	@ApiOperation(value = "Feed 설정 화면 - 피드이름 수정")
 	@PutMapping("/name")
-	public ResponseEntity changeFeedName(@RequestBody ModifyFeedRequest modifyFeedRequest) {
+	public ResponseEntity changeFeedName(@RequestBody ModifyFeedNameRequest modifyFeedNameRequest) {
 		try {
-			feedService.updateFeedName(modifyFeedRequest);
-			return ResponseEntity.status(HttpStatus.OK).body(
-					new ResponseDto(HttpStatus.OK.value(),"피드이름 수정 완료","")
-			);
+			feedService.updateFeedName(modifyFeedNameRequest);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-					new ResponseDto(HttpStatus.BAD_REQUEST.value(),"피드이름 수정 실패","")
-			);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
 
@@ -69,13 +57,9 @@ public class FeedController {
 	public ResponseEntity changeFeedImage(@RequestBody ModifyFeedImageRequest modifyFeedImageRequest) {
 		try {
 			feedService.updateFeedImage(modifyFeedImageRequest);
-			return ResponseEntity.status(HttpStatus.OK).body(
-					new ResponseDto(HttpStatus.OK.value(),"피드이미지 수정 완료","")
-			);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-					new ResponseDto(HttpStatus.BAD_REQUEST.value(),"피드이미지 수정 실패","")
-			);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
 
@@ -84,13 +68,9 @@ public class FeedController {
 	public ResponseEntity<?> setFirstFeed(@RequestBody ModifyFirstFeedRequest modifyFirstFeedRequest) {
 		try {
 			feedService.updateFirstFeed(modifyFirstFeedRequest);
-			return ResponseEntity.status(HttpStatus.OK).body(
-					new ResponseDto(HttpStatus.OK.value(),"대표피드 수정 완료","")
-			);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-					new ResponseDto(HttpStatus.BAD_REQUEST.value(),"대표피드 수정 실패","")
-			);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
 
