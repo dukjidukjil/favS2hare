@@ -1,17 +1,12 @@
 package com.favshare.feed.controller;
 
-import com.favshare._temp.dto.input.FeedPopIdDto;
-import com.favshare._temp.dto.input.FeedUserIdDto;
-import com.favshare._temp.dto.input.IdFeedImageUrlDto;
-import com.favshare._temp.dto.input.IdNameDto;
-import com.favshare._temp.service.FeedService;
-import com.favshare._temp.service.PopInFeedService;
+
 import com.favshare.feed.dto.ModifyFeedImageRequest;
 import com.favshare.feed.dto.ModifyFeedRequest;
 import com.favshare.feed.dto.ModifyFirstFeedRequest;
+import com.favshare.feed.service.FeedService;
 import com.favshare.global.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,11 +1,11 @@
 package com.favshare.feed.repository;
 
-import com.favshare._temp.entity.FeedEntity;
+import com.favshare.feed.entity.Feed;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface FeedRepository extends JpaRepository<FeedEntity, Integer> {
+public interface FeedRepository extends JpaRepository<Feed, Integer> {
 
 	@Query(value = "select id from feed where is_first = true and user_id = :userId", nativeQuery = true)
 	public int findFirstId(@Param("userId") int userId);
