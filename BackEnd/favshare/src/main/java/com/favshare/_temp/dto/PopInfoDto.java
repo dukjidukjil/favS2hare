@@ -2,8 +2,8 @@ package com.favshare._temp.dto;
 
 import java.time.LocalDateTime;
 
-import com.favshare._temp.entity.PopEntity;
-import com.favshare._temp.entity.YoutubeEntity;
+import com.favshare.pops.entity.PopEntity;
+import com.favshare.youtube.entity.YoutubeEntity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

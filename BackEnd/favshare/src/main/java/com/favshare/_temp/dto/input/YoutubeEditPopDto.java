@@ -2,8 +2,8 @@ package com.favshare._temp.dto.input;
 
 import java.time.LocalDateTime;
 
-import com.favshare._temp.entity.FeedEntity;
-import com.favshare._temp.entity.PopEntity;
+import com.favshare.feed.entity.Feed;
+import com.favshare.pops.entity.PopEntity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,7 +23,7 @@ public class YoutubeEditPopDto {
 	private int views;
 	private boolean isMuted;
 
-	public YoutubeEditPopDto(PopEntity popEntity, FeedEntity feedEntity) {
+	public YoutubeEditPopDto(PopEntity popEntity, Feed feedEntity) {
 		this.userId = popEntity.getUser().getId();
 		this.youtubeUrl = popEntity.getYoutubeEntity().getUrl();
 		this.feedId = feedEntity.getId();

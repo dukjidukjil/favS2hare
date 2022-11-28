@@ -4,8 +4,13 @@ import java.util.*;
 
 import javax.persistence.*;
 
-import com.favshare._temp.entity.*;
+import com.favshare.feed.entity.Feed;
+import com.favshare.follow.entity.FollowEntity;
 import com.favshare.global.baseEntity.BaseEntity;
+import com.favshare.idol.entity.InterestIdolEntity;
+import com.favshare.pops.entity.*;
+import com.favshare.youtube.entity.ShowYoutubeEntity;
+import com.favshare.youtube.entity.StoreYoutubeEntity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.*;
@@ -38,40 +43,49 @@ public class User extends BaseEntity {
 
 //	private String auth;
 
-	@OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
+	@Builder.Default
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<PopEntity> popList = new ArrayList<>();
 
-	@OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
+	@Builder.Default
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<CommentEntity> commentList = new ArrayList<>();
 
-	@OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
-	private List<FeedEntity> feedList = new ArrayList<>();
+	@Builder.Default
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<Feed> feedList = new ArrayList<>();
 
-	@OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
+	@Builder.Default
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<LikePopEntity> likePopList = new ArrayList<>();
 
-	@OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
+	@Builder.Default
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<ShowPopEntity> showPopList = new ArrayList<>();
 
-	@OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
+	@Builder.Default
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<StoreYoutubeEntity> storeYoutubeList = new ArrayList<>();
 
-	@OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
+	@Builder.Default
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<ShowYoutubeEntity> showYoutubeList = new ArrayList<>();
 
-	@OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
+	@Builder.Default
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<LikeCommentEntity> likeCommentList = new ArrayList<>();
 
-	@OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
+	@Builder.Default
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<InterestIdolEntity> interestIdolList = new ArrayList<>();
 
-	@OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
-	private List<InterestSongEntity> interestSongList = new ArrayList<>();
 
-	@OneToMany(mappedBy = "fromUserEntity", cascade = CascadeType.ALL)
+	@Builder.Default
+	@OneToMany(mappedBy = "fromUser", cascade = CascadeType.ALL)
 	private List<FollowEntity> fromUserEntityList = new ArrayList<>();
 
-	@OneToMany(mappedBy = "toUserEntity", cascade = CascadeType.ALL)
+	@Builder.Default
+	@OneToMany(mappedBy = "toUser", cascade = CascadeType.ALL)
 	private List<FollowEntity> toUserEntityList = new ArrayList<>();
 
 	public void changePassword(String password) {

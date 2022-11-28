@@ -8,6 +8,7 @@ import com.favshare.feed.repository.FeedRepository;
 import com.favshare.global.exception.CustomException;
 import com.favshare.user.entity.User;
 import com.favshare.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +16,11 @@ import static com.favshare.feed.exception.ErrorCode.FEED_NOT_FOUND;
 import static com.favshare.feed.exception.ErrorCode.USER_NOT_FOUND;
 
 @Service
+@RequiredArgsConstructor
 public class FeedService {
+	private final FeedRepository feedRepository;
 
-	@Autowired
-	private FeedRepository feedRepository;
-
-	@Autowired
-	private UserRepository userRepository;
+	private final UserRepository userRepository;
 
 	public void insertFeed(int userId) {
 		Feed feedEntity;

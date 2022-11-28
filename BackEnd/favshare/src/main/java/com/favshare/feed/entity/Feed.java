@@ -14,7 +14,11 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Entity
+@Table(name="feed")
 public class Feed extends BaseEntity {
+
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "feed_id")
@@ -28,7 +32,8 @@ public class Feed extends BaseEntity {
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@OneToMany(mappedBy = "feed", cascade = CascadeType.ALL)
+	@Builder.Default
+	@OneToMany(mappedBy = "feedEntity", cascade = CascadeType.ALL)
 	private List<PopInFeedEntity> popInFeedList = new ArrayList<>();
 
 	public void changeName(String name) {

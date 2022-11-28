@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.favshare.feed.entity.Feed;
+import com.favshare.feed.repository.FeedRepository;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +15,6 @@ import org.springframework.stereotype.Service;
 import com.favshare._temp.dto.FeedDto;
 import com.favshare._temp.dto.IdolDto;
 import com.favshare._temp.dto.PopDto;
-import com.favshare._temp.dto.SongDto;
 import com.favshare._temp.dto.UserAccountDto;
 import com.favshare._temp.dto.input.EmailPasswordDto;
 import com.favshare._temp.dto.input.FeedUserIdDto;
@@ -21,45 +23,35 @@ import com.favshare._temp.dto.input.FriendFeedDto;
 import com.favshare._temp.dto.input.UserInfoDto;
 import com.favshare._temp.dto.input.UserProfileDto;
 import com.favshare._temp.dto.input.UserSignUpDto;
-import com.favshare._temp.entity.FeedEntity;
-import com.favshare._temp.entity.FollowEntity;
-import com.favshare._temp.entity.IdolEntity;
-import com.favshare._temp.entity.InterestIdolEntity;
-import com.favshare._temp.entity.InterestSongEntity;
-import com.favshare._temp.entity.PopEntity;
-import com.favshare._temp.entity.PopInFeedEntity;
-import com.favshare._temp.entity.SongEntity;
+import com.favshare.follow.entity.FollowEntity;
+import com.favshare.idol.entity.IdolEntity;
+import com.favshare.idol.entity.InterestIdolEntity;
+import com.favshare.pops.entity.PopEntity;
+import com.favshare.popsInFeed.entity.PopInFeedEntity;
 import com.favshare.user.entity.User;
-import com.favshare._temp.repository.FeedRepository;
-import com.favshare._temp.repository.FollowRepository;
-import com.favshare._temp.repository.InterestIdolRepository;
-import com.favshare._temp.repository.InterestSongRepository;
-import com.favshare._temp.repository.LikePopRepository;
+import com.favshare.follow.repository.FollowRepository;
+import com.favshare.idol.repository.InterestIdolRepository;
+import com.favshare.pops.repository.LikePopRepository;
 import com.favshare.user.repository.UserRepository;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-	@Autowired
-	private UserRepository userRepository;
+	private final  UserRepository userRepository;
 
-	@Autowired
-	private FeedRepository feedRepository;
 
-	@Autowired
-	private FollowRepository followRepository;
+	private final FeedRepository feedRepository;
 
-	@Autowired
-	private LikePopRepository likepopRepository;
 
-	@Autowired
-	private ModelMapper modelMapper;
+	private final  FollowRepository followRepository;
 
-	@Autowired
-	private InterestIdolRepository interestIdolRepository;
 
-	@Autowired
-	private InterestSongRepository interestSongRepository;
+	private final LikePopRepository likepopRepository;
+
+
+	private final InterestIdolRepository interestIdolRepository;
+
 
 	public UserAccountDto getByEmail(String email) {
 		User user;
@@ -122,8 +114,8 @@ public class UserService {
 
 	public List<FeedDto> getFeedList(int userId) {
 		User user = userRepository.findById(userId).get();
-		List<FeedEntity> feedEntityList = user.getFeedList();
-		List<FeedDto> feedDtoList = Arrays.asList(modelMapper.map(feedEntityList, FeedDto[].class));
+		List<Feed> feedEntityList = user.getFeedList();
+		List<FeedDto> feedDtoList = null;//Arrays.asList(modelMapper.map(feedEntityList, FeedDto[].class));
 		return feedDtoList;
 	}
 
@@ -137,13 +129,13 @@ public class UserService {
 	public List<PopDto> getAllPopList(FeedUserIdDto feedUserIdDto) {
 		User user = userRepository.getById(feedUserIdDto.getUserId());
 
-		List<PopDto> result = Arrays.asList(modelMapper.map(user.getPopList(), PopDto[].class));
+		List<PopDto> result = null;//Arrays.asList(modelMapper.map(user.getPopList(), PopDto[].class));
 
 		return result;
 	}
 
 	public List<PopDto> getPopInFeedList(int feedId, int userId) {
-		FeedEntity feedEntity = feedRepository.findById(feedId).get();
+		Feed feedEntity = feedRepository.findById(feedId).get();
 		List<PopInFeedEntity> popInFeedEntityList = feedEntity.getPopInFeedList();
 
 		List<PopDto> result = new ArrayList<>();
@@ -195,7 +187,7 @@ public class UserService {
 
 			UserProfileDto userProfileDto = getUserProfileById(person.getId());
 
-			List<PopDto> popDtoList = Arrays.asList(modelMapper.map(temp, PopDto[].class));
+			List<PopDto> popDtoList = null;//Arrays.asList(modelMapper.map(temp, PopDto[].class));
 			if (popDtoList.size() == 0)
 				continue;
 
@@ -214,7 +206,7 @@ public class UserService {
 			followerList.add(followEntityList.get(i).getFromUser());
 		}
 
-		List<UserProfileDto> UserProfileDtoList = Arrays.asList(modelMapper.map(followerList, UserProfileDto[].class));
+		List<UserProfileDto> UserProfileDtoList = null;//Arrays.asList(modelMapper.map(followerList, UserProfileDto[].class));
 
 		return UserProfileDtoList;
 	}
@@ -225,18 +217,8 @@ public class UserService {
 		for (int i = 0; i < interestIdolList.size(); i++) {
 			idolEntityList.add(interestIdolList.get(i).getIdolEntity());
 		}
-		List<IdolDto> idolDtoList = Arrays.asList(modelMapper.map(idolEntityList, IdolDto[].class));
+		List<IdolDto> idolDtoList = null;//Arrays.asList(modelMapper.map(idolEntityList, IdolDto[].class));
 		return idolDtoList;
-	}
-
-	public List<SongDto> getInterestSongList(int userId) {
-		List<InterestSongEntity> interestSongList = interestSongRepository.findAllByUserId(userId);
-		List<SongEntity> songEntityList = new ArrayList<SongEntity>();
-		for (int i = 0; i < interestSongList.size(); i++) {
-			songEntityList.add(interestSongList.get(i).getSongEntity());
-		}
-		List<SongDto> songDtoList = Arrays.asList(modelMapper.map(songEntityList, SongDto[].class));
-		return songDtoList;
 	}
 
 	public boolean isExistUserByEmail(String email) {
@@ -252,7 +234,7 @@ public class UserService {
 	public List<UserProfileDto> userDtoListByKeyword(String keyword) {
 
 		List<User> userList = userRepository.findByKeywordContains(keyword);
-		List<UserProfileDto> userDtoList = Arrays.asList(modelMapper.map(userList, UserProfileDto[].class));
+		List<UserProfileDto> userDtoList = null;//Arrays.asList(modelMapper.map(userList, UserProfileDto[].class));
 		return userDtoList;
 	}
 
