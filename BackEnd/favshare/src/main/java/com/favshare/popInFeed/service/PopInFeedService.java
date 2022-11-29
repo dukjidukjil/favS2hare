@@ -1,16 +1,15 @@
-package com.favshare.popsInFeed.service;
+package com.favshare.popInFeed.service;
 
 import java.util.List;
 
 import com.favshare._temp.dto.input.FeedPopIdDto;
 import com.favshare.feed.entity.Feed;
 import com.favshare.feed.repository.FeedRepository;
-import com.favshare.pops.entity.PopEntity;
-import com.favshare.popsInFeed.entity.PopInFeedEntity;
-import com.favshare.popsInFeed.repository.PopInFeedRepository;
-import com.favshare.pops.repository.PopRepository;
+import com.favshare.pop.entity.Pop;
+import com.favshare.popInFeed.entity.PopInFeedEntity;
+import com.favshare.popInFeed.repository.PopInFeedRepository;
+import com.favshare.pop.repository.PopRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,8 +27,8 @@ public class PopInFeedService {
 
 		for (int i = 0; i < feedPopIdDto.getPopId().size(); i++) {
 			Feed feedEntity = feedRepository.findById(feedPopIdDto.getFeedId()).get();
-			PopEntity popEntity = popRepository.findById(feedPopIdDto.getPopId().get(i)).get();
-			PopInFeedEntity popInFeedEntity = PopInFeedEntity.builder().feedEntity(feedEntity).popEntity(popEntity).build();
+			Pop pop = popRepository.findById(feedPopIdDto.getPopId().get(i)).get();
+			PopInFeedEntity popInFeedEntity = PopInFeedEntity.builder().feedEntity(feedEntity).pop(pop).build();
 			popInFeedRepository.save(popInFeedEntity);
 		}
 

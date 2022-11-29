@@ -1,18 +1,17 @@
-package com.favshare.pops.service;
+package com.favshare.pop.service;
 
 
 import com.favshare._temp.dto.input.UserCommentIdDto;
-import com.favshare.pops.entity.CommentEntity;
-import com.favshare.pops.entity.LikeCommentEntity;
+import com.favshare.pop.entity.Comment;
+import com.favshare.pop.entity.LikeComment;
 import com.favshare.user.entity.User;
-import com.favshare.pops.repository.CommentRepository;
+import com.favshare.pop.repository.CommentRepository;
 import com.favshare.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.favshare.pops.repository.LikeCommentRepository;
+import com.favshare.pop.repository.LikeCommentRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -28,18 +27,18 @@ public class LikeCommentService {
 		int userId = userCommentIdDto.getUserId();
 		likeCommentRepository.findById(userId);
 
-		LikeCommentEntity likeCommentEntity;
+		LikeComment likeComment;
 
 		User user = userRepository.findById(userCommentIdDto.getUserId()).get();
-		CommentEntity commentEntity = commentRepository.findById(userCommentIdDto.getCommentId()).get();
+		Comment comment = commentRepository.findById(userCommentIdDto.getCommentId()).get();
 
-		int duplicate = likeCommentRepository.findByUserIdCommentID(userId, commentEntity.getId());
+		int duplicate = likeCommentRepository.findByUserIdCommentID(userId, comment.getId());
 		if (duplicate >= 1) {
 
 		} else {
 
-			likeCommentEntity = LikeCommentEntity.builder().user(user).commentEntity(commentEntity).build();
-			likeCommentRepository.save(likeCommentEntity);
+			likeComment = LikeComment.builder().user(user).comment(comment).build();
+			likeCommentRepository.save(likeComment);
 		}
 
 	}

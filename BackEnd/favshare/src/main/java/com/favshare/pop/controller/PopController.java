@@ -1,4 +1,4 @@
-package com.favshare.pops.controller;
+package com.favshare.pop.controller;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -11,8 +11,8 @@ import com.favshare._temp.dto.input.FriendFeedDto;
 import com.favshare._temp.dto.input.IdolUserIdDto;
 import com.favshare._temp.dto.input.UserPopIdDto;
 import com.favshare._temp.dto.input.UserProfileDto;
-import com.favshare.pops.service.LikePopService;
-import com.favshare.pops.service.PopService;
+import com.favshare.pop.service.LikePopService;
+import com.favshare.pop.service.PopService;
 import com.favshare.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,14 +1,14 @@
-package com.favshare.pops.repository;
+package com.favshare.pop.repository;
 
 import javax.transaction.Transactional;
 
-import com.favshare.pops.entity.LikeCommentEntity;
+import com.favshare.pop.entity.LikeComment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface LikeCommentRepository extends JpaRepository<LikeCommentEntity, Integer> {
+public interface LikeCommentRepository extends JpaRepository<LikeComment, Integer> {
 	@Transactional
 	@Modifying
 	@Query(value = "delete from like_comment where user_id = :userId and comment_id = :commentId", nativeQuery = true)

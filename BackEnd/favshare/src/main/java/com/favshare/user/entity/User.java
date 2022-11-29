@@ -8,7 +8,7 @@ import com.favshare.feed.entity.Feed;
 import com.favshare.follow.entity.FollowEntity;
 import com.favshare.global.baseEntity.BaseEntity;
 import com.favshare.idol.entity.InterestIdolEntity;
-import com.favshare.pops.entity.*;
+import com.favshare.pop.entity.*;
 import com.favshare.youtube.entity.ShowYoutubeEntity;
 import com.favshare.youtube.entity.StoreYoutubeEntity;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -45,11 +45,11 @@ public class User extends BaseEntity {
 
 	@Builder.Default
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<PopEntity> popList = new ArrayList<>();
+	private List<Pop> popList = new ArrayList<>();
 
 	@Builder.Default
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<CommentEntity> commentList = new ArrayList<>();
+	private List<Comment> commentList = new ArrayList<>();
 
 	@Builder.Default
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -57,11 +57,11 @@ public class User extends BaseEntity {
 
 	@Builder.Default
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<LikePopEntity> likePopList = new ArrayList<>();
+	private List<LikePop> likePopList = new ArrayList<>();
 
 	@Builder.Default
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<ShowPopEntity> showPopList = new ArrayList<>();
+	private List<ShowPop> showPopList = new ArrayList<>();
 
 	@Builder.Default
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -73,7 +73,7 @@ public class User extends BaseEntity {
 
 	@Builder.Default
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<LikeCommentEntity> likeCommentList = new ArrayList<>();
+	private List<LikeComment> likeCommentList = new ArrayList<>();
 
 	@Builder.Default
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

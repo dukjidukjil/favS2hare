@@ -1,4 +1,4 @@
-package com.favshare.pops.entity;
+package com.favshare.pop.entity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import com.favshare.popsInFeed.entity.PopInFeedEntity;
+import com.favshare.popInFeed.entity.PopInFeedEntity;
 import com.favshare.youtube.entity.YoutubeEntity;
 import com.favshare.user.entity.User;
 import lombok.*;
@@ -18,7 +18,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PopEntity {
+public class Pop {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
@@ -47,15 +47,15 @@ public class PopEntity {
 
 	@Builder.Default
 	@OneToMany(mappedBy = "popEntity", cascade = CascadeType.ALL)
-	private List<CommentEntity> commentList = new ArrayList<>();
+	private List<Comment> commentList = new ArrayList<>();
 
 	@Builder.Default
 	@OneToMany(mappedBy = "popEntity", cascade = CascadeType.ALL)
-	private List<LikePopEntity> likePopList = new ArrayList<>();
+	private List<LikePop> likePopList = new ArrayList<>();
 
 	@Builder.Default
 	@OneToMany(mappedBy = "popEntity", cascade = CascadeType.ALL)
-	private List<ShowPopEntity> showPopList = new ArrayList<>();
+	private List<ShowPop> showPopList = new ArrayList<>();
 
 	@Builder.Default
 	@OneToMany(mappedBy = "popEntity", cascade = CascadeType.ALL)

@@ -1,12 +1,12 @@
-package com.favshare.pops.controller;
+package com.favshare.pop.controller;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.favshare._temp.dto.CommentDto;
-import com.favshare.pops.entity.CommentEntity;
-import com.favshare.pops.service.CommentService;
-import com.favshare.pops.service.LikeCommentService;
+import com.favshare.pop.entity.Comment;
+import com.favshare.pop.service.CommentService;
+import com.favshare.pop.service.LikeCommentService;
 import com.favshare.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,15 +41,15 @@ public class CommentController {
 		int popId = userPopIdDto.getPopId();
 
 		try {
-			List<CommentEntity> commentEntityList = commentService.getCommentList(popId);
+			List<Comment> commentList = commentService.getCommentList(popId);
 			List<CommentDto> result = new ArrayList<>();
 
-			for (int i = 0; i < commentEntityList.size(); i++) {
-				CommentEntity commentEntity = commentEntityList.get(i);
-				UserProfileDto user = userService.getUserProfileById(commentEntity.getUser().getId());
-				boolean isLiked = likeCommentService.isLiked(userId, commentEntity.getId());
+			for (int i = 0; i < commentList.size(); i++) {
+				Comment comment = commentList.get(i);
+				UserProfileDto user = userService.getUserProfileById(comment.getUser().getId());
+				boolean isLiked = likeCommentService.isLiked(userId, comment.getId());
 
-				result.add(new CommentDto(commentEntity, user.getNickname(), user.getProfileImageUrl(), isLiked));
+				result.add(new CommentDto(comment, user.getNickname(), user.getProfileImageUrl(), isLiked));
 			}
 
 			return new ResponseEntity<List<CommentDto>>(result, HttpStatus.OK);

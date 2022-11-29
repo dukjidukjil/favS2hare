@@ -1,4 +1,4 @@
-package com.favshare.pops.entity;
+package com.favshare.pop.entity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CommentEntity {
+public class Comment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
@@ -50,11 +50,11 @@ public class CommentEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pop_id", nullable = false)
-	private PopEntity popEntity;
+	private Pop pop;
 
 	@Builder.Default
 	@OneToMany(mappedBy = "commentEntity", cascade = CascadeType.ALL)
-	private List<LikeCommentEntity> likeCommentList = new ArrayList<>();
+	private List<LikeComment> likeCommentList = new ArrayList<>();
 
 	public void changeComment(String content) {
 		this.content = content;

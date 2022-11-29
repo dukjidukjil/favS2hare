@@ -5,7 +5,7 @@ import java.util.*;
 import javax.persistence.*;
 
 import com.favshare.idol.entity.IdolEntity;
-import com.favshare.pops.entity.PopEntity;
+import com.favshare.pop.entity.Pop;
 import lombok.*;
 
 @Entity
@@ -24,7 +24,7 @@ public class YoutubeEntity {
 
 	@Builder.Default
 	@OneToMany(mappedBy = "youtubeEntity")
-	private List<PopEntity> popList = new ArrayList<>();
+	private List<Pop> popList = new ArrayList<>();
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "idol_id")

@@ -2,14 +2,11 @@ package com.favshare.user.service;
 
 import java.util.ArrayList;
 
-import java.util.Arrays;
 import java.util.List;
 
 import com.favshare.feed.entity.Feed;
 import com.favshare.feed.repository.FeedRepository;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.favshare._temp.dto.FeedDto;
@@ -26,12 +23,12 @@ import com.favshare._temp.dto.input.UserSignUpDto;
 import com.favshare.follow.entity.FollowEntity;
 import com.favshare.idol.entity.IdolEntity;
 import com.favshare.idol.entity.InterestIdolEntity;
-import com.favshare.pops.entity.PopEntity;
-import com.favshare.popsInFeed.entity.PopInFeedEntity;
+import com.favshare.pop.entity.Pop;
+import com.favshare.popInFeed.entity.PopInFeedEntity;
 import com.favshare.user.entity.User;
 import com.favshare.follow.repository.FollowRepository;
 import com.favshare.idol.repository.InterestIdolRepository;
-import com.favshare.pops.repository.LikePopRepository;
+import com.favshare.pop.repository.LikePopRepository;
 import com.favshare.user.repository.UserRepository;
 
 @Service
@@ -140,9 +137,9 @@ public class UserService {
 
 		List<PopDto> result = new ArrayList<>();
 		for (int i = 0; i < popInFeedEntityList.size(); i++) {
-			PopEntity popEntity = popInFeedEntityList.get(i).getPopEntity();
-			boolean isLiked = isLiked(userId, popEntity.getId());
-			result.add(new PopDto(popEntity, isLiked));
+			Pop pop = popInFeedEntityList.get(i).getPop();
+			boolean isLiked = isLiked(userId, pop.getId());
+			result.add(new PopDto(pop, isLiked));
 		}
 
 		return result;
@@ -183,7 +180,7 @@ public class UserService {
 
 			User person = followEntityList.get(i).getToUser();
 
-			List<PopEntity> temp = followEntityList.get(i).getToUser().getPopList();
+			List<Pop> temp = followEntityList.get(i).getToUser().getPopList();
 
 			UserProfileDto userProfileDto = getUserProfileById(person.getId());
 

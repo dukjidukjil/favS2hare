@@ -1,7 +1,7 @@
-package com.favshare.pops.controller;
+package com.favshare.pop.controller;
 
 import com.favshare._temp.dto.input.UserCommentIdDto;
-import com.favshare.pops.service.LikeCommentService;
+import com.favshare.pop.service.LikeCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

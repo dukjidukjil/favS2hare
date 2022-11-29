@@ -1,4 +1,4 @@
-package com.favshare.pops.repository;
+package com.favshare.pop.repository;
 
 import java.util.List;
 
@@ -9,12 +9,12 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.favshare.pops.entity.CommentEntity;
+import com.favshare.pop.entity.Comment;
 
-public interface CommentRepository extends JpaRepository<CommentEntity, Integer> {
+public interface CommentRepository extends JpaRepository<Comment, Integer> {
 
 	@Query(value = "select * from comment where user_id = :userId and id = :commentId", nativeQuery = true)
-	public CommentEntity findByUserCommentId(@Param("userId") int userId, @Param("commentId") int commentId);
+	public Comment findByUserCommentId(@Param("userId") int userId, @Param("commentId") int commentId);
 
 	@Transactional
 	@Modifying
@@ -22,6 +22,6 @@ public interface CommentRepository extends JpaRepository<CommentEntity, Integer>
 	public void deleteByUserCommentId(@Param("userId") int userId, @Param("commentId") int commentId);
 
 	@Query(value = "select * from comment where pop_id = :popId", nativeQuery = true)
-	public List<CommentEntity> findAllByPopId(@Param("popId") int popId);
+	public List<Comment> findAllByPopId(@Param("popId") int popId);
 
 }

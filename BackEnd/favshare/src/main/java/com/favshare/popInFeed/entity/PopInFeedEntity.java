@@ -1,9 +1,9 @@
-package com.favshare.popsInFeed.entity;
+package com.favshare.popInFeed.entity;
 
 import javax.persistence.*;
 
 import com.favshare.feed.entity.Feed;
-import com.favshare.pops.entity.PopEntity;
+import com.favshare.pop.entity.Pop;
 import lombok.*;
 
 @Entity
@@ -20,7 +20,7 @@ public class PopInFeedEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pop_id", nullable = false)
-	private PopEntity popEntity;
+	private Pop pop;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "feed_id", nullable = false)

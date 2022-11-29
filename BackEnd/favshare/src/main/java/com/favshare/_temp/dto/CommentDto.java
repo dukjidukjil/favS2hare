@@ -2,7 +2,7 @@ package com.favshare._temp.dto;
 
 import java.time.LocalDateTime;
 
-import com.favshare.pops.entity.CommentEntity;
+import com.favshare.pop.entity.Comment;
 
 import lombok.*;
 
@@ -21,16 +21,16 @@ public class CommentDto {
 	private int countCommentLikes;
 	private boolean isLiked;
 
-	public CommentDto(CommentEntity commentEntity, String nickname, String profileImageUrl, boolean isLiked) {
-		this.id = commentEntity.getId();
-		this.content = commentEntity.getContent();
-		this.createDate = commentEntity.getCreateDate();
-		this.isModify = commentEntity.isModify();
-		this.userId = commentEntity.getUser().getId();
-		this.popId = commentEntity.getPopEntity().getId();
+	public CommentDto(Comment comment, String nickname, String profileImageUrl, boolean isLiked) {
+		this.id = comment.getId();
+		this.content = comment.getContent();
+		this.createDate = comment.getCreateDate();
+		this.isModify = comment.isModify();
+		this.userId = comment.getUser().getId();
+		this.popId = comment.getPop().getId();
 		this.nickname = nickname;
 		this.profileImageUrl = profileImageUrl;
-		this.countCommentLikes = commentEntity.getLikeCommentList().size();
+		this.countCommentLikes = comment.getLikeCommentList().size();
 		this.isLiked = isLiked;
 	}
 

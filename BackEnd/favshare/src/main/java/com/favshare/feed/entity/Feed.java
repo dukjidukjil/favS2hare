@@ -1,7 +1,7 @@
 package com.favshare.feed.entity;
 
 import com.favshare.global.baseEntity.BaseEntity;
-import com.favshare.popsInFeed.entity.PopInFeedEntity;
+import com.favshare.popInFeed.entity.PopInFeedEntity;
 import com.favshare.user.entity.User;
 import lombok.*;
 

@@ -1,4 +1,4 @@
-package com.favshare.pops.service;
+package com.favshare.pop.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -17,22 +17,20 @@ import com.favshare._temp.dto.input.YoutubeEditPopDto;
 import com.favshare.feed.entity.Feed;
 import com.favshare.feed.repository.FeedRepository;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.favshare.idol.entity.IdolEntity;
 import com.favshare.idol.entity.InterestIdolEntity;
-import com.favshare.pops.entity.PopEntity;
-import com.favshare.popsInFeed.entity.PopInFeedEntity;
-import com.favshare.pops.entity.ShowPopEntity;
+import com.favshare.pop.entity.Pop;
+import com.favshare.popInFeed.entity.PopInFeedEntity;
+import com.favshare.pop.entity.ShowPop;
 import com.favshare.user.entity.User;
 import com.favshare.youtube.entity.YoutubeEntity;
 import com.favshare.idol.repository.IdolRepository;
 import com.favshare.idol.repository.InterestIdolRepository;
-import com.favshare.pops.repository.LikePopRepository;
-import com.favshare.popsInFeed.repository.PopInFeedRepository;
-import com.favshare.pops.repository.PopRepository;
-import com.favshare.pops.repository.ShowPopRepository;
+import com.favshare.pop.repository.LikePopRepository;
+import com.favshare.popInFeed.repository.PopInFeedRepository;
+import com.favshare.pop.repository.PopRepository;
+import com.favshare.pop.repository.ShowPopRepository;
 import com.favshare.user.repository.UserRepository;
 import com.favshare.youtube.repository.YoutubeRepository;
 
@@ -59,13 +57,13 @@ public class PopService {
 	private final LikePopRepository likePopRepository;
 
 	public void updatePopView(int popId) {
-		PopEntity popEntity = popRepository.findById(popId).get();
-		popEntity.changeView();
-		popRepository.save(popEntity);
+		Pop pop = popRepository.findById(popId).get();
+		pop.changeView();
+		popRepository.save(pop);
 	}
 
 	public PopInfoDto getPopInfoById(int popId, int userId) {
-		PopEntity popEntity = popRepository.findById(popId).get();
+		Pop pop = popRepository.findById(popId).get();
 		boolean isLiked;
 
 		if (userId == 0)
@@ -73,7 +71,7 @@ public class PopService {
 		else
 			isLiked = isLiked(userId, popId);
 
-		PopInfoDto popInfoDto = new PopInfoDto(popEntity, popEntity.getYoutubeEntity(), isLiked);
+		PopInfoDto popInfoDto = new PopInfoDto(pop, pop.getYoutubeEntity(), isLiked);
 
 		return popInfoDto;
 	}
@@ -87,10 +85,10 @@ public class PopService {
 	}
 
 	public PopDto getPopDtoById(int userId, int popId) {
-		PopEntity popEntity = popRepository.findById(popId).get();
+		Pop pop = popRepository.findById(popId).get();
 
 		boolean isLiked = isLiked(userId, popId);
-		PopDto popDto = new PopDto(popEntity, isLiked);
+		PopDto popDto = new PopDto(pop, isLiked);
 		return popDto;
 	}
 
@@ -118,18 +116,18 @@ public class PopService {
 		
 
 		// 팝에도 넣어주고
-		PopEntity popEntity = PopEntity.builder().name(youtubeEditPopDto.getName())
+		Pop pop = Pop.builder().name(youtubeEditPopDto.getName())
 				.startSecond(youtubeEditPopDto.getStartSecond()).endSecond(youtubeEditPopDto.getEndSecond())
 				.content(youtubeEditPopDto.getContent()).createDate(LocalDateTime.now())
 				.views(youtubeEditPopDto.getViews()).user(user).youtubeEntity(youtubeEntity).build();
-		popRepository.save(popEntity);
+		popRepository.save(pop);
 
 		// popinfeed에도 넣어준다
 		// 해당 user가 보유한 feed가 없을 때에는 feedId 값을 0으로 설정해서, 전체 피드에만 속할 수 있도록 수정
 		if (youtubeEditPopDto.getFeedId() >= 1) {
 			Feed feedEntity = feedRepository.findById(youtubeEditPopDto.getFeedId()).get();
 
-			PopInFeedEntity popInFeedEntity = PopInFeedEntity.builder().popEntity(popEntity).feedEntity(feedEntity).build();
+			PopInFeedEntity popInFeedEntity = PopInFeedEntity.builder().pop(pop).feedEntity(feedEntity).build();
 			popInFeedRepository.save(popInFeedEntity);
 		}
 
@@ -156,26 +154,26 @@ public class PopService {
 	public List<PopAlgoDto> getCustomPopList(int userId) {
 		// 조회수, 좋아요수, 팔로워 수 를 통해 알고리즘 구현 (5 : 3 : 2 의 가중치 부여)
 
-		List<PopEntity> popEntityList = popRepository.findAll();
+		List<Pop> popList = popRepository.findAll();
 		List<PopAlgoDto> algoList = new ArrayList<PopAlgoDto>();
 		double referenceValue; // maxValues의 중간값
 		int[] value = new int[3]; // 순서대로 조회수, 좋아요수, 팔로워수
 		int[] maxValue = new int[3]; //
 
 		// 조회수, 좋아요수, 팔로워수의 최댓값을 구하고 / log취한 값을 algoList에 저장
-		for (int i = 0; i < popEntityList.size(); i++) {
+		for (int i = 0; i < popList.size(); i++) {
 			// 이미 시청한 pop의 경우 알고리즘 리스트에 넣지 않는다.
-			if (isWatched(userId, popEntityList.get(i).getId()))
+			if (isWatched(userId, popList.get(i).getId()))
 				continue;
 
-			value[0] = (int) (Math.log10(popEntityList.get(i).getViews()) * 100);
-			value[1] = (int) (Math.log10(popEntityList.get(i).getLikePopList().size()) * 100);
-			value[2] = (int) (Math.log10(popEntityList.get(i).getUser().getToUserEntityList().size()) * 100);
+			value[0] = (int) (Math.log10(popList.get(i).getViews()) * 100);
+			value[1] = (int) (Math.log10(popList.get(i).getLikePopList().size()) * 100);
+			value[2] = (int) (Math.log10(popList.get(i).getUser().getToUserEntityList().size()) * 100);
 
 			maxValue[0] = Math.max(maxValue[0], value[0]);
 			maxValue[1] = Math.max(maxValue[1], value[1]);
 			maxValue[2] = Math.max(maxValue[2], value[2]);
-			algoList.add(new PopAlgoDto(popEntityList.get(i).getId(), value[0], value[1], value[2], 0));
+			algoList.add(new PopAlgoDto(popList.get(i).getId(), value[0], value[1], value[2], 0));
 		}
 
 		Arrays.sort(maxValue);
@@ -204,15 +202,15 @@ public class PopService {
 	}
 
 	public List<PopDto> getRandomPopList() {
-		List<PopEntity> popEntityList = popRepository.findAll();
-		List<PopEntity> randomPopList = new ArrayList<PopEntity>();
+		List<Pop> popList = popRepository.findAll();
+		List<Pop> randomPopList = new ArrayList<Pop>();
 
-		int[] randomList = new int[popEntityList.size()];
+		int[] randomList = new int[popList.size()];
 		Random r = new Random();
 
 		// 전체 pop의 개수 안에서 랜덤으로 순서 정함.
-		for (int i = 0; i < popEntityList.size(); i++) {
-			randomList[i] = r.nextInt(popEntityList.size());
+		for (int i = 0; i < popList.size(); i++) {
+			randomList[i] = r.nextInt(popList.size());
 			for (int j = 0; j < i; j++) {
 				if (randomList[i] == randomList[j])
 					i--;
@@ -220,7 +218,7 @@ public class PopService {
 		}
 
 		for (int i = 0; i < randomList.length; i++) {
-			randomPopList.add(popEntityList.get(randomList[i]));
+			randomPopList.add(popList.get(randomList[i]));
 		}
 
 		List<PopDto> result = null;//Arrays.asList(modelMapper.map(randomPopList, PopDto[].class));
@@ -234,24 +232,24 @@ public class PopService {
 		int[] maxValue = new int[3]; //
 		IdolEntity idol = idolRepository.findById(idolUserIdDto.getIdolId()).get();
 		String keyword = idol.getName();
-		List<PopEntity> popEntityList = popRepository.findByKeywordContains(keyword);
+		List<Pop> popList = popRepository.findByKeywordContains(keyword);
 
 		List<PopAlgoDto> algoList = new ArrayList<PopAlgoDto>();
 
 		// 조회수, 좋아요수, 팔로워수의 최댓값을 구하고 / log취한 값을 algoList에 저장
-		for (int i = 0; i < popEntityList.size(); i++) {
+		for (int i = 0; i < popList.size(); i++) {
 			// 이미 시청한 pop의 경우 알고리즘 리스트에 넣지 않는다.
-			if (isWatched(idolUserIdDto.getUserId(), popEntityList.get(i).getId()))
+			if (isWatched(idolUserIdDto.getUserId(), popList.get(i).getId()))
 				continue;
 
-			value[0] = (int) (Math.log10(popEntityList.get(i).getViews()) * 100);
-			value[1] = (int) (Math.log10(popEntityList.get(i).getLikePopList().size()) * 100);
-			value[2] = (int) (Math.log10(popEntityList.get(i).getUser().getToUserEntityList().size()) * 100);
+			value[0] = (int) (Math.log10(popList.get(i).getViews()) * 100);
+			value[1] = (int) (Math.log10(popList.get(i).getLikePopList().size()) * 100);
+			value[2] = (int) (Math.log10(popList.get(i).getUser().getToUserEntityList().size()) * 100);
 
 			maxValue[0] = Math.max(maxValue[0], value[0]);
 			maxValue[1] = Math.max(maxValue[1], value[1]);
 			maxValue[2] = Math.max(maxValue[2], value[2]);
-			algoList.add(new PopAlgoDto(popEntityList.get(i).getId(), value[0], value[1], value[2], 0));
+			algoList.add(new PopAlgoDto(popList.get(i).getId(), value[0], value[1], value[2], 0));
 		}
 
 		Arrays.sort(maxValue);
@@ -302,7 +300,7 @@ public class PopService {
 
 	public List<PopDto> popDtoListByUserId(int userId) {
 		User user = userRepository.findById(userId).get();
-		List<PopEntity> popEntity = user.getPopList();
+		List<Pop> pop = user.getPopList();
 
 		List<PopDto> popDtoList = null;//Arrays.asList(modelMapper.map(popEntity, PopDto[].class));
 		return popDtoList;
@@ -310,12 +308,12 @@ public class PopService {
 
 	public List<PopDto> popDtoListByKeyword(String keyword, int userId) {
 
-		List<PopEntity> popEntityList = popRepository.findByKeywordContains(keyword);
+		List<Pop> popList = popRepository.findByKeywordContains(keyword);
 
 		List<PopDto> popDtoList = new ArrayList<PopDto>();
-		for (int i = 0; i < popEntityList.size(); i++) {
-			boolean isLiked = isLiked(userId, popEntityList.get(i).getId());
-			popDtoList.add(new PopDto(popEntityList.get(i), isLiked));
+		for (int i = 0; i < popList.size(); i++) {
+			boolean isLiked = isLiked(userId, popList.get(i).getId());
+			popDtoList.add(new PopDto(popList.get(i), isLiked));
 		}
 		return popDtoList;
 	}
@@ -333,11 +331,11 @@ public class PopService {
 	}
 
 	public void insertShowPop(int popId, int userId) {
-		PopEntity popEntity = popRepository.getById(popId);
+		Pop pop = popRepository.getById(popId);
 		User user = userRepository.getById(userId);
 
-		ShowPopEntity showPopEntity = ShowPopEntity.builder().popEntity(popEntity).user(user).build();
-		showPopRepository.save(showPopEntity);
+		ShowPop showPop = ShowPop.builder().pop(pop).user(user).build();
+		showPopRepository.save(showPop);
 
 	}
 

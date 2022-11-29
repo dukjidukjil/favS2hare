@@ -2,7 +2,7 @@ package com.favshare._temp.dto;
 
 import java.time.LocalDateTime;
 
-import com.favshare.pops.entity.PopEntity;
+import com.favshare.pop.entity.Pop;
 import com.favshare.youtube.entity.YoutubeEntity;
 
 import lombok.Data;
@@ -25,19 +25,19 @@ public class PopInfoDto {
 	private boolean isLiked;
 	private boolean isMuted;
 
-	public PopInfoDto(PopEntity popEntity, YoutubeEntity youtubeEntity, boolean isLiked) {
-		this.id = popEntity.getId();
-		this.name = popEntity.getName();
-		this.startSecond = popEntity.getStartSecond();
-		this.endSecond = popEntity.getEndSecond();
-		this.content = popEntity.getContent();
-		this.createDate = popEntity.getCreateDate();
-		this.views = popEntity.getViews();
-		this.likeCount = popEntity.getLikePopList().size();
+	public PopInfoDto(Pop pop, YoutubeEntity youtubeEntity, boolean isLiked) {
+		this.id = pop.getId();
+		this.name = pop.getName();
+		this.startSecond = pop.getStartSecond();
+		this.endSecond = pop.getEndSecond();
+		this.content = pop.getContent();
+		this.createDate = pop.getCreateDate();
+		this.views = pop.getViews();
+		this.likeCount = pop.getLikePopList().size();
 		this.youtubeId = youtubeEntity.getId();
 		this.url = youtubeEntity.getUrl();
 		this.isLiked = isLiked;
-		this.userId = popEntity.getUser().getId();
-		this.isMuted = popEntity.isMuted();
+		this.userId = pop.getUser().getId();
+		this.isMuted = pop.isMuted();
 	}
 }

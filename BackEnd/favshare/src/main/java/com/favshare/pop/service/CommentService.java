@@ -1,4 +1,4 @@
-package com.favshare.pops.service;
+package com.favshare.pop.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -6,14 +6,13 @@ import java.util.List;
 import com.favshare._temp.dto.input.UserCommentContentIdDto;
 import com.favshare._temp.dto.input.UserCommentIdDto;
 import com.favshare._temp.dto.input.UserPopContentIdDto;
-import com.favshare.pops.entity.CommentEntity;
-import com.favshare.pops.entity.PopEntity;
+import com.favshare.pop.entity.Comment;
+import com.favshare.pop.entity.Pop;
 import com.favshare.user.entity.User;
-import com.favshare.pops.repository.CommentRepository;
-import com.favshare.pops.repository.PopRepository;
+import com.favshare.pop.repository.CommentRepository;
+import com.favshare.pop.repository.PopRepository;
 import com.favshare.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,27 +25,27 @@ public class CommentService {
 
 	private final PopRepository popRepository;
 
-	public List<CommentEntity> getCommentList(int popId) {
+	public List<Comment> getCommentList(int popId) {
 		return commentRepository.findAllByPopId(popId);
 	}
 
 	public void insertComment(UserPopContentIdDto userPopContentIdDto) {
 
 		User user = userRepository.findById(userPopContentIdDto.getUserId()).get();
-		PopEntity popEntity = popRepository.findById(userPopContentIdDto.getPopId()).get();
+		Pop pop = popRepository.findById(userPopContentIdDto.getPopId()).get();
 
-		CommentEntity commentEntity = CommentEntity.builder().content(userPopContentIdDto.getContent())
-				.createDate(LocalDateTime.now()).isModify(false).user(user).popEntity(popEntity).build();
+		Comment comment = Comment.builder().content(userPopContentIdDto.getContent())
+				.createDate(LocalDateTime.now()).isModify(false).user(user).pop(pop).build();
 
-		commentRepository.save(commentEntity);
+		commentRepository.save(comment);
 	}
 
 	public void updateComment(UserCommentContentIdDto userCommentContentIdDto) {
-		CommentEntity commentEntity;
-		commentEntity = commentRepository.findByUserCommentId(userCommentContentIdDto.getUserId(),
+		Comment comment;
+		comment = commentRepository.findByUserCommentId(userCommentContentIdDto.getUserId(),
 				userCommentContentIdDto.getCommentId());
-		commentEntity.changeComment(userCommentContentIdDto.getContent());
-		commentRepository.save(commentEntity);
+		comment.changeComment(userCommentContentIdDto.getContent());
+		commentRepository.save(comment);
 	}
 
 	public void deleteComment(UserCommentIdDto userCommentIdDto) {
