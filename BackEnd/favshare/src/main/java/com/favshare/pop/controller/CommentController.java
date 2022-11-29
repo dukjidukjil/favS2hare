@@ -8,6 +8,7 @@ import com.favshare.pop.entity.Comment;
 import com.favshare.pop.service.CommentService;
 import com.favshare.pop.service.LikeCommentService;
 import com.favshare.user.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,17 +23,12 @@ import com.favshare._temp.dto.input.UserProfileDto;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/pop/comment")
 public class CommentController {
-
-	@Autowired
-	private CommentService commentService;
-
-	@Autowired
-	private UserService userService;
-
-	@Autowired
-	private LikeCommentService likeCommentService;
+	private final CommentService commentService;
+	private final UserService userService;
+	private final LikeCommentService likeCommentService;
 
 	@ApiOperation(value = "댓글 버튼 클릭시 - 댓글 리스트 반환", response = ResponseEntity.class)
 	@PostMapping("/list")

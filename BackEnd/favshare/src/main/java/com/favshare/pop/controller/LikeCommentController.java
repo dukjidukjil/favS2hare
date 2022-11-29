@@ -2,6 +2,7 @@ package com.favshare.pop.controller;
 
 import com.favshare._temp.dto.input.UserCommentIdDto;
 import com.favshare.pop.service.LikeCommentService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/pop/likeComment")
 public class LikeCommentController {
-
-	@Autowired
-	private LikeCommentService likeCommentService;
+	private final LikeCommentService likeCommentService;
 
 	@ApiOperation(value = "댓글 좋아요 클릭 시", response = ResponseEntity.class)
 	@PostMapping

@@ -14,6 +14,7 @@ import com.favshare._temp.dto.input.UserProfileDto;
 import com.favshare.pop.service.LikePopService;
 import com.favshare.pop.service.PopService;
 import com.favshare.user.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,17 +35,12 @@ import com.favshare._temp.dto.PopInfoDto;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/pop")
 public class PopController {
-
-	@Autowired
-	private PopService popService;
-
-	@Autowired
-	private UserService userService;
-
-	@Autowired
-	private LikePopService likePopService;
+	private final PopService popService;
+	private final UserService userService;
+	private final LikePopService likePopService;
 
 	@ApiOperation(value = "사용자에게 맞는 팝 리스트", response = List.class)
 	@PostMapping
