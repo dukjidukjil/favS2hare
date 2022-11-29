@@ -46,19 +46,19 @@ public class Pop {
 	private YoutubeEntity youtubeEntity;
 
 	@Builder.Default
-	@OneToMany(mappedBy = "popEntity", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "pop", cascade = CascadeType.ALL)
 	private List<Comment> commentList = new ArrayList<>();
 
 	@Builder.Default
-	@OneToMany(mappedBy = "popEntity", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "pop", cascade = CascadeType.ALL)
 	private List<LikePop> likePopList = new ArrayList<>();
 
 	@Builder.Default
-	@OneToMany(mappedBy = "popEntity", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "pop", cascade = CascadeType.ALL)
 	private List<ShowPop> showPopList = new ArrayList<>();
 
 	@Builder.Default
-	@OneToMany(mappedBy = "popEntity", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "pop", cascade = CascadeType.ALL)
 	private List<PopInFeedEntity> popInFeedList = new ArrayList<>();
 
 	public void changeView() {

@@ -53,7 +53,7 @@ public class Comment {
 	private Pop pop;
 
 	@Builder.Default
-	@OneToMany(mappedBy = "commentEntity", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
 	private List<LikeComment> likeCommentList = new ArrayList<>();
 
 	public void changeComment(String content) {

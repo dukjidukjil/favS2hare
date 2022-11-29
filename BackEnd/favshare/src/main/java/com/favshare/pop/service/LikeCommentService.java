@@ -2,6 +2,7 @@ package com.favshare.pop.service;
 
 
 import com.favshare._temp.dto.input.UserCommentIdDto;
+import com.favshare.pop.dto.likecomment.LikeCommentRequest;
 import com.favshare.pop.entity.Comment;
 import com.favshare.pop.entity.LikeComment;
 import com.favshare.user.entity.User;
@@ -23,14 +24,14 @@ public class LikeCommentService {
 
 	private final UserRepository userRepository;
 
-	public void insertLike(@RequestBody UserCommentIdDto userCommentIdDto) {
-		int userId = userCommentIdDto.getUserId();
+	public void insertLike(@RequestBody LikeCommentRequest likeCommentRequest) {
+		int userId = likeCommentRequest.getUserId();
 		likeCommentRepository.findById(userId);
 
 		LikeComment likeComment;
 
-		User user = userRepository.findById(userCommentIdDto.getUserId()).get();
-		Comment comment = commentRepository.findById(userCommentIdDto.getCommentId()).get();
+		User user = userRepository.findById(likeCommentRequest.getUserId()).get();
+		Comment comment = commentRepository.findById(likeCommentRequest.getCommentId()).get();
 
 		int duplicate = likeCommentRepository.findByUserIdCommentID(userId, comment.getId());
 		if (duplicate >= 1) {
@@ -43,8 +44,8 @@ public class LikeCommentService {
 
 	}
 
-	public void deleteCommentLike(@RequestBody UserCommentIdDto userCommentIdDto) {
-		likeCommentRepository.deleteLikeByUserCommentId(userCommentIdDto.getUserId(), userCommentIdDto.getCommentId());
+	public void deleteCommentLike(@RequestBody LikeCommentRequest likeCommentRequest) {
+		likeCommentRepository.deleteLikeByUserCommentId(likeCommentRequest.getUserId(), likeCommentRequest.getCommentId());
 	}
 
 	public boolean isLiked(int userId, int commentId) {

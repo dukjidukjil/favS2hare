@@ -16,6 +16,8 @@ import com.favshare._temp.dto.input.IdolUserIdDto;
 import com.favshare._temp.dto.input.YoutubeEditPopDto;
 import com.favshare.feed.entity.Feed;
 import com.favshare.feed.repository.FeedRepository;
+import com.favshare.pop.dto.pop.DeletePopRequest;
+import com.favshare.pop.dto.pop.GetPopListRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.favshare.idol.entity.IdolEntity;
@@ -138,7 +140,8 @@ public class PopService {
 		return user.getPopList().size();
 	}
 
-	public void deletePop(List<Integer> popIdList) {
+	public void deletePop(DeletePopRequest deletePopRequest) {
+		List<Integer> popIdList = deletePopRequest.getPopIdList();
 		for (int i = 0; i < popIdList.size(); i++) {
 			popRepository.deleteById(popIdList.get(i));
 		}
@@ -226,11 +229,11 @@ public class PopService {
 		return result;
 	}
 
-	public List<PopAlgoDto> getCategoryPopList(IdolUserIdDto idolUserIdDto) {
+	public List<PopAlgoDto> getCategoryPopList(GetPopListRequest getPopListRequest) {
 		double referenceValue; // maxValues의 중간값
 		int[] value = new int[3]; // 순서대로 조회수, 좋아요수, 팔로워수
 		int[] maxValue = new int[3]; //
-		IdolEntity idol = idolRepository.findById(idolUserIdDto.getIdolId()).get();
+		IdolEntity idol = idolRepository.findById(getPopListRequest.getIdolId()).get();
 		String keyword = idol.getName();
 		List<Pop> popList = popRepository.findByKeywordContains(keyword);
 
@@ -239,7 +242,7 @@ public class PopService {
 		// 조회수, 좋아요수, 팔로워수의 최댓값을 구하고 / log취한 값을 algoList에 저장
 		for (int i = 0; i < popList.size(); i++) {
 			// 이미 시청한 pop의 경우 알고리즘 리스트에 넣지 않는다.
-			if (isWatched(idolUserIdDto.getUserId(), popList.get(i).getId()))
+			if (isWatched(getPopListRequest.getUserId(), popList.get(i).getId()))
 				continue;
 
 			value[0] = (int) (Math.log10(popList.get(i).getViews()) * 100);

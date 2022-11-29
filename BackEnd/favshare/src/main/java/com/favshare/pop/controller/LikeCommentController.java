@@ -1,6 +1,7 @@
 package com.favshare.pop.controller;
 
 import com.favshare._temp.dto.input.UserCommentIdDto;
+import com.favshare.pop.dto.likecomment.LikeCommentRequest;
 import com.favshare.pop.service.LikeCommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,9 @@ public class LikeCommentController {
 
 	@ApiOperation(value = "댓글 좋아요 클릭 시", response = ResponseEntity.class)
 	@PostMapping
-	public ResponseEntity<?> addLikeComment(@RequestBody UserCommentIdDto userCommentIdDto) {
+	public ResponseEntity<?> addLikeComment(@RequestBody LikeCommentRequest likeCommentRequest) {
 		try {
-			likeCommentService.insertLike(userCommentIdDto);
+			likeCommentService.insertLike(likeCommentRequest);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 
@@ -34,9 +35,9 @@ public class LikeCommentController {
 
 	@ApiOperation(value = "댓글 좋아요 취소 시", response = ResponseEntity.class)
 	@DeleteMapping
-	public ResponseEntity<?> deleteLikeComment(@RequestBody UserCommentIdDto userCommentIdDto) {
+	public ResponseEntity<?> deleteLikeComment(@RequestBody LikeCommentRequest likeCommentRequest) {
 		try {
-			likeCommentService.deleteCommentLike(userCommentIdDto);
+			likeCommentService.deleteCommentLike(likeCommentRequest);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 

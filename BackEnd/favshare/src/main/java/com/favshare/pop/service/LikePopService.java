@@ -1,6 +1,7 @@
 package com.favshare.pop.service;
 
 import com.favshare._temp.dto.input.UserPopIdDto;
+import com.favshare.pop.dto.pop.PopInfoRequest;
 import com.favshare.pop.entity.LikePop;
 import com.favshare.pop.entity.Pop;
 import com.favshare.user.entity.User;
@@ -20,11 +21,11 @@ public class LikePopService {
 
 	private final PopRepository popRepository;
 
-	public void insertLikePop(UserPopIdDto userPopIdDto) {
+	public void insertLikePop(PopInfoRequest popInfoRequest) {
 		LikePop likePop;
 
-		User user = userRepository.findById(userPopIdDto.getUserId()).get();
-		Pop pop = popRepository.findById(userPopIdDto.getPopId()).get();
+		User user = userRepository.findById(popInfoRequest.getUserId()).get();
+		Pop pop = popRepository.findById(popInfoRequest.getPopId()).get();
 
 		int duplicate = likePopRepository.findByPopIdUserId(user.getId(), pop.getId());
 		if (duplicate >= 1) {
@@ -37,9 +38,9 @@ public class LikePopService {
 
 	}
 
-	public void deleteLikePop(UserPopIdDto userPopIdDto) {
+	public void deleteLikePop(PopInfoRequest popInfoRequest) {
 		LikePop likePop;
-		likePop = likePopRepository.searchByUserIdAndPopId(userPopIdDto.getUserId(), userPopIdDto.getPopId());
+		likePop = likePopRepository.searchByUserIdAndPopId(popInfoRequest.getUserId(), popInfoRequest.getPopId());
 		likePopRepository.deleteById(likePop.getId());
 	}
 }

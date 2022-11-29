@@ -6,6 +6,9 @@ import java.util.List;
 import com.favshare._temp.dto.input.UserCommentContentIdDto;
 import com.favshare._temp.dto.input.UserCommentIdDto;
 import com.favshare._temp.dto.input.UserPopContentIdDto;
+import com.favshare.pop.dto.comment.CreateCommentRequest;
+import com.favshare.pop.dto.comment.DeleteCommentRequest;
+import com.favshare.pop.dto.comment.ModifyCommentRequest;
 import com.favshare.pop.entity.Comment;
 import com.favshare.pop.entity.Pop;
 import com.favshare.user.entity.User;
@@ -29,27 +32,27 @@ public class CommentService {
 		return commentRepository.findAllByPopId(popId);
 	}
 
-	public void insertComment(UserPopContentIdDto userPopContentIdDto) {
+	public void insertComment(CreateCommentRequest createCommentRequest) {
 
-		User user = userRepository.findById(userPopContentIdDto.getUserId()).get();
-		Pop pop = popRepository.findById(userPopContentIdDto.getPopId()).get();
+		User user = userRepository.findById(createCommentRequest.getUserId()).get();
+		Pop pop = popRepository.findById(createCommentRequest.getPopId()).get();
 
-		Comment comment = Comment.builder().content(userPopContentIdDto.getContent())
+		Comment comment = Comment.builder().content(createCommentRequest.getContent())
 				.createDate(LocalDateTime.now()).isModify(false).user(user).pop(pop).build();
 
 		commentRepository.save(comment);
 	}
 
-	public void updateComment(UserCommentContentIdDto userCommentContentIdDto) {
+	public void updateComment(ModifyCommentRequest modifyCommentRequest) {
 		Comment comment;
-		comment = commentRepository.findByUserCommentId(userCommentContentIdDto.getUserId(),
-				userCommentContentIdDto.getCommentId());
-		comment.changeComment(userCommentContentIdDto.getContent());
+		comment = commentRepository.findByUserCommentId(modifyCommentRequest.getUserId(),
+				modifyCommentRequest.getCommentId());
+		comment.changeComment(modifyCommentRequest.getContent());
 		commentRepository.save(comment);
 	}
 
-	public void deleteComment(UserCommentIdDto userCommentIdDto) {
-		commentRepository.deleteByUserCommentId(userCommentIdDto.getUserId(), userCommentIdDto.getCommentId());
+	public void deleteComment(DeleteCommentRequest deleteCommentRequest) {
+		commentRepository.deleteByUserCommentId(deleteCommentRequest.getUserId(), deleteCommentRequest.getCommentId());
 	}
 
 }
