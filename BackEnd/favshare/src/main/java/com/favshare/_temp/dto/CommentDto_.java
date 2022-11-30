@@ -8,12 +8,12 @@ import lombok.*;
 
 @Data
 @NoArgsConstructor
-public class CommentDto {
+public class CommentDto_ {
 
 	private int id;
 	private String content;
-	private LocalDateTime createDate;
-	private boolean isModify;
+	private LocalDateTime createdDate;
+	private boolean isModified;
 	private int userId;
 	private int popId;
 	private String nickname;
@@ -21,7 +21,7 @@ public class CommentDto {
 	private int countCommentLikes;
 	private boolean isLiked;
 
-	public CommentDto(Comment comment, String nickname, String profileImageUrl, boolean isLiked) {
+	public CommentDto_(Comment comment, String nickname, String profileImageUrl, boolean isLiked) {
 		this.id = comment.getId();
 		this.content = comment.getContent();
 		this.createDate = comment.getCreateDate();

@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.favshare.pop.entity.Comment;
 
-public interface CommentRepository extends JpaRepository<Comment, Integer> {
+public interface CommentRepository extends JpaRepository<Comment, Integer>, CommentRepositoryCustom {
 
 	@Query(value = "select * from comment where user_id = :userId and id = :commentId", nativeQuery = true)
 	public Comment findByUserCommentId(@Param("userId") int userId, @Param("commentId") int commentId);
@@ -23,5 +23,7 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
 
 	@Query(value = "select * from comment where pop_id = :popId", nativeQuery = true)
 	public List<Comment> findAllByPopId(@Param("popId") int popId);
+
+
 
 }

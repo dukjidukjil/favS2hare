@@ -1,14 +1,13 @@
 package com.favshare.pop.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
-import com.favshare._temp.dto.input.UserCommentContentIdDto;
-import com.favshare._temp.dto.input.UserCommentIdDto;
-import com.favshare._temp.dto.input.UserPopContentIdDto;
-import com.favshare.pop.dto.comment.CreateCommentRequest;
-import com.favshare.pop.dto.comment.DeleteCommentRequest;
-import com.favshare.pop.dto.comment.ModifyCommentRequest;
+
+import com.favshare._temp.dto.CommentDto_;
+import com.favshare._temp.dto.input.UserProfileDto;
+import com.favshare.pop.dto.comment.*;
 import com.favshare.pop.entity.Comment;
 import com.favshare.pop.entity.Pop;
 import com.favshare.user.entity.User;
@@ -28,31 +27,51 @@ public class CommentService {
 
 	private final PopRepository popRepository;
 
-	public List<Comment> getCommentList(int popId) {
-		return commentRepository.findAllByPopId(popId);
+	public List<CommentDto> getCommentList(GetCommentListRequest getCommentListRequest) {
+		int popId = getCommentListRequest.getPopId();
+		int userId = getCommentListRequest.getUserId();
+		// querydsl 검증 필요
+		return commentRepository.getCommentList(popId, userId);
+
+//		List<com.favshare.pop.entity.Comment> commentList = commentRepository.findAllByPopId(popId);
+//		List<CommentDto_> result = new ArrayList<>();
+//
+//		for (int i = 0; i < commentList.size(); i++) {
+//			com.favshare.pop.entity.Comment comment = commentList.get(i);
+//			UserProfileDto user = userService.getUserProfileById(comment.getUser().getId());
+//			boolean isLiked = likeCommentService.isLiked(userId, comment.getId());
+//
+//			result.add(new CommentDto_(comment, user.getNickname(), user.getProfileImageUrl(), isLiked));
+//		}
 	}
 
 	public void insertComment(CreateCommentRequest createCommentRequest) {
+		int userId = createCommentRequest.getUserId();
+		int popId = createCommentRequest.getPopId();
+		String content = createCommentRequest.getContent();
 
-		User user = userRepository.findById(createCommentRequest.getUserId()).get();
-		Pop pop = popRepository.findById(createCommentRequest.getPopId()).get();
+		User user = userRepository.findById(userId).get();
+		Pop pop = popRepository.findById(popId).get();
 
-		Comment comment = Comment.builder().content(createCommentRequest.getContent())
-				.createDate(LocalDateTime.now()).isModify(false).user(user).pop(pop).build();
+		Comment commentDto = Comment.builder().content(content)
+				.createdDate(LocalDateTime.now()).isModified(false).user(user).pop(pop).build();
 
-		commentRepository.save(comment);
+		commentRepository.save(commentDto);
 	}
 
 	public void updateComment(ModifyCommentRequest modifyCommentRequest) {
-		Comment comment;
-		comment = commentRepository.findByUserCommentId(modifyCommentRequest.getUserId(),
-				modifyCommentRequest.getCommentId());
-		comment.changeComment(modifyCommentRequest.getContent());
-		commentRepository.save(comment);
+		int userId = modifyCommentRequest.getUserId();
+		int commentId = modifyCommentRequest.getCommentId();
+		String content = modifyCommentRequest.getContent();
+
+		Comment comment = commentRepository.findByUserCommentId(userId,commentId);
+		comment.changeComment(content);
 	}
 
 	public void deleteComment(DeleteCommentRequest deleteCommentRequest) {
-		commentRepository.deleteByUserCommentId(deleteCommentRequest.getUserId(), deleteCommentRequest.getCommentId());
+		int userId = deleteCommentRequest.getUserId();
+		int commentId = deleteCommentRequest.getCommentId();
+		commentRepository.deleteByUserCommentId(userId, commentId);
 	}
 
 }

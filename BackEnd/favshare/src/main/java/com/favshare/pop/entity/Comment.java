@@ -39,10 +39,10 @@ public class Comment {
 	private String content;
 
 	@Column(name = "create_date", nullable = false)
-	private LocalDateTime createDate;
+	private LocalDateTime createdDate;
 
 	@Column(name = "is_modify", nullable = false)
-	private boolean isModify;
+	private boolean isModified;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false)
@@ -58,7 +58,7 @@ public class Comment {
 
 	public void changeComment(String content) {
 		this.content = content;
-		this.isModify = true;
+		this.isModified = true;
 	}
 
 }
