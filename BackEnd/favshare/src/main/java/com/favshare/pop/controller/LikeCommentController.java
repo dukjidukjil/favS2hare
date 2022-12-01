@@ -26,10 +26,9 @@ public class LikeCommentController {
 	public ResponseEntity<?> addLikeComment(@RequestBody LikeCommentRequest likeCommentRequest) {
 		try {
 			likeCommentService.insertLike(likeCommentRequest);
-			return new ResponseEntity<>(HttpStatus.OK);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
-
-			return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
 
@@ -38,10 +37,9 @@ public class LikeCommentController {
 	public ResponseEntity<?> deleteLikeComment(@RequestBody LikeCommentRequest likeCommentRequest) {
 		try {
 			likeCommentService.deleteCommentLike(likeCommentRequest);
-			return new ResponseEntity<>(HttpStatus.OK);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
-
-			return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
 }

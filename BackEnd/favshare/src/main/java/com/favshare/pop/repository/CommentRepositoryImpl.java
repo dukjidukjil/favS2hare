@@ -1,10 +1,9 @@
 package com.favshare.pop.repository;
 
 
-import com.favshare.pop.dto.comment.CommentDto;
+import com.favshare.pop.dto.comment.CommentResponse;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.BooleanPath;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +18,8 @@ import static com.favshare.user.entity.QUser.user;
 public class CommentRepositoryImpl implements CommentRepositoryCustom{
     private final JPAQueryFactory queryFactory;
     @Override
-    public List<CommentDto> getCommentList(int popId, int userId) {
-        return queryFactory.select(Projections.constructor(CommentDto.class,
+    public List<CommentResponse> getCommentList(int popId, int userId) {
+        return queryFactory.select(Projections.constructor(CommentResponse.class,
                     comment.id,
                     comment.content,
                     comment.createdDate,

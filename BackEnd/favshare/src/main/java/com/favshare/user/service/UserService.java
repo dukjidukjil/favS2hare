@@ -71,9 +71,9 @@ public class UserService {
 		userRepository.save(user);
 	}
 
-	public UserProfileDto getUserProfileById(int id) {
+	public UserProfileDto getUserProfileById(int userId) {
 		User user;
-		user = userRepository.findById(id).get();
+		user = userRepository.findById(userId).get();
 		UserProfileDto result = new UserProfileDto(user);
 		return result;
 	}

@@ -1,23 +1,18 @@
 package com.favshare.pop.service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import com.favshare._temp.dto.IdolDto;
 import com.favshare._temp.dto.PopAlgoDto;
 import com.favshare._temp.dto.PopDto;
 import com.favshare._temp.dto.PopInfoDto;
 import com.favshare._temp.dto.input.IdolUserIdDto;
+import com.favshare._temp.dto.input.UserProfileDto;
 import com.favshare._temp.dto.input.YoutubeEditPopDto;
 import com.favshare.feed.entity.Feed;
 import com.favshare.feed.repository.FeedRepository;
-import com.favshare.pop.dto.pop.DeletePopRequest;
-import com.favshare.pop.dto.pop.GetPopListRequest;
+import com.favshare.pop.dto.pop.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.favshare.idol.entity.IdolEntity;
@@ -35,6 +30,7 @@ import com.favshare.pop.repository.PopRepository;
 import com.favshare.pop.repository.ShowPopRepository;
 import com.favshare.user.repository.UserRepository;
 import com.favshare.youtube.repository.YoutubeRepository;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 @RequiredArgsConstructor
@@ -62,6 +58,29 @@ public class PopService {
 		Pop pop = popRepository.findById(popId).get();
 		pop.changeView();
 		popRepository.save(pop);
+	}
+
+	public PopInfoResponse showPopInfo(PopInfoRequest popInfoRequest){
+		int popId = popInfoRequest.getPopId();
+		int userId = popInfoRequest.getUserId();
+
+		PopInfoDto popInfoDto = getPopInfoById(popId, userId);
+		User user = userRepository.findById(userId).get();
+		UserProfileDto userProfileDto = new UserProfileDto(user);
+
+		this.insertShowPop(popId, userId);
+		return PopInfoResponse.builder().popInfoDto(popInfoDto).userProfileDto(userProfileDto).build();
+	}
+
+	public PopInfoFromOriginYoutubeResponse getPopInfoFromOriginYoutube(@RequestBody PopInfoRequest popInfoRequest){
+		int userId = popInfoRequest.getUserId();
+		int popId = popInfoRequest.getPopId();
+
+		PopInfoDto popInfoDto = getPopInfoById(popId, userId);
+		List<PopDto> popList = getPopListById(userId, popId, popInfoDto.getYoutubeId());
+		int popCnt = popList.size();
+		return PopInfoFromOriginYoutubeResponse.builder().popCnt(popCnt).popList(popList).build();
+
 	}
 
 	public PopInfoDto getPopInfoById(int popId, int userId) {

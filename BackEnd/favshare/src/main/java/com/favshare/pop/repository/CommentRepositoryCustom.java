@@ -2,11 +2,11 @@ package com.favshare.pop.repository;
 
 
 
-import com.favshare.pop.dto.comment.CommentDto;
+import com.favshare.pop.dto.comment.CommentResponse;
 
 import java.util.List;
 
 public interface CommentRepositoryCustom {
-    List<CommentDto> getCommentList(int popId, int userId);
+    List<CommentResponse> getCommentList(int popId, int userId);
 
 }

@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
-public class CommentDto {
+public class CommentResponse {
     private int commentId;
     private String content;
     private LocalDateTime createdDate;

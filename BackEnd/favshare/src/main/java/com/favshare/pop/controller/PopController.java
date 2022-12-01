@@ -14,6 +14,7 @@ import com.favshare.pop.dto.UserIdRequest;
 import com.favshare.pop.dto.pop.DeletePopRequest;
 import com.favshare.pop.dto.pop.GetPopListRequest;
 import com.favshare.pop.dto.pop.PopInfoRequest;
+import com.favshare.pop.dto.pop.PopInfoResponse;
 import com.favshare.pop.service.LikePopService;
 import com.favshare.pop.service.PopService;
 import com.favshare.user.service.UserService;
@@ -46,7 +47,7 @@ public class PopController {
 
 	@ApiOperation(value = "사용자에게 맞는 팝 리스트", response = List.class)
 	@PostMapping
-	public ResponseEntity<List<PopDto>> showPopList(@RequestBody GetPopListRequest getPopListRequest) {
+	public ResponseEntity showPopList(@RequestBody GetPopListRequest getPopListRequest) {
 
 		int idolId = getPopListRequest.getIdolId();
 		int userId = getPopListRequest.getUserId();
@@ -86,85 +87,66 @@ public class PopController {
 
 	@ApiOperation(value = "팝 시청시 조회수 증가", response = ResponseEntity.class)
 	@PutMapping("/detail/{popId}")
-	public ResponseEntity<?> modifyPopView(@PathVariable("popId") int popId) {
+	public ResponseEntity modifyPopView(@PathVariable("popId") int popId) {
 		try {
 			popService.updatePopView(popId);
-			return new ResponseEntity<>(HttpStatus.OK);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 
 	}
 
 	@ApiOperation(value = "팝 정보", response = PopInfoDto.class)
 	@PostMapping("/info")
-	public ResponseEntity<HashMap<String, Object>> showPopInfo(@RequestBody PopInfoRequest popInfoRequest) {
+	public ResponseEntity showPopInfo(@RequestBody PopInfoRequest popInfoRequest) {
 		try {
-			PopInfoDto popInfoDto = popService.getPopInfoById(popInfoRequest.getPopId(), popInfoRequest.getUserId());
-
-			UserProfileDto userProfileDto = userService.getUserProfileById(popInfoRequest.getUserId());
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("popInfoDto", popInfoDto);
-			map.put("userProfileDto", userProfileDto);
-
-			popService.insertShowPop(popInfoRequest.getPopId(), popInfoRequest.getUserId());
-
-			return new ResponseEntity<HashMap<String, Object>>(map, HttpStatus.OK);
+			return ResponseEntity.status(HttpStatus.OK).body(popService.showPopInfo(popInfoRequest));
 		} catch (Exception e) {
-			return new ResponseEntity<HashMap<String, Object>>(HttpStatus.BAD_REQUEST);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
 
 	@ApiOperation(value = "팝 좋아요", response = ResponseEntity.class)
 	@PostMapping("/like")
-	public ResponseEntity<?> likePop(@RequestBody PopInfoRequest popInfoRequest) {
+	public ResponseEntity likePop(@RequestBody PopInfoRequest popInfoRequest) {
 		try {
 			likePopService.insertLikePop(popInfoRequest);
-			return new ResponseEntity<>(HttpStatus.OK);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
 
 	@ApiOperation(value = "팝 좋아요 취소", response = ResponseEntity.class)
 	@DeleteMapping("/like")
-	public ResponseEntity<?> dislikePop(@RequestBody PopInfoRequest popInfoRequest) {
+	public ResponseEntity dislikePop(@RequestBody PopInfoRequest popInfoRequest) {
 		try {
 			likePopService.deleteLikePop(popInfoRequest);
-			return new ResponseEntity<>(HttpStatus.OK);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
 
 	@ApiOperation(value = "유튜브 원본 영상에 만들어진 팝 리스트", response = PopInfoDto.class)
 	@PostMapping("/youtube")
-	public ResponseEntity<HashMap<String, Object>> showOrginYoutubePopInfo(@RequestBody PopInfoRequest popInfoRequest) {
-		int userId = popInfoRequest.getUserId();
-		int popId = popInfoRequest.getPopId();
+	public ResponseEntity showOrginYoutubePopInfo(@RequestBody PopInfoRequest popInfoRequest) {
 		try {
-			HashMap<String, Object> result = new HashMap<String, Object>();
-			PopInfoDto popInfoDto = popService.getPopInfoById(popId, userId);
-			List<PopDto> popList = popService.getPopListById(userId, popId, popInfoDto.getYoutubeId());
-			int countPopByYoutubeId = popList.size();
-
-			result.put("countPopList", countPopByYoutubeId);
-			result.put("popInfo", popList);
-
-			return new ResponseEntity<HashMap<String, Object>>(result, HttpStatus.OK);
+			return ResponseEntity.status(HttpStatus.OK).body(popService.getPopInfoFromOriginYoutube(popInfoRequest));
 		} catch (Exception e) {
-			return new ResponseEntity<HashMap<String, Object>>(HttpStatus.BAD_REQUEST);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
 
 	@ApiOperation(value = "팝 삭제 - 한개, 여러개 모두 삭제 가능", response = PopInfoDto.class)
 	@DeleteMapping
-	public ResponseEntity<?> deletePop(@RequestBody DeletePopRequest deletePopRequest) {
+	public ResponseEntity deletePop(@RequestBody DeletePopRequest deletePopRequest) {
 		try {
 			popService.deletePop(deletePopRequest);
-			return new ResponseEntity<>(HttpStatus.OK);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
 
@@ -173,10 +155,9 @@ public class PopController {
 	public ResponseEntity<List<IdolDto>> getInterestIdolList(@RequestBody UserIdRequest userIdRequest) {
 		int userId = userIdRequest.getUserId();
 		try {
-			List<IdolDto> result = popService.getInterestIdolList(userId);
-			return new ResponseEntity<List<IdolDto>>(result, HttpStatus.OK);
+			return ResponseEntity.status(HttpStatus.OK).body(popService.getInterestIdolList(userId));
 		} catch (Exception e) {
-			return new ResponseEntity<List<IdolDto>>(HttpStatus.BAD_REQUEST);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
 

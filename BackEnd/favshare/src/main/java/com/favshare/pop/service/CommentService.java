@@ -1,12 +1,9 @@
 package com.favshare.pop.service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 
-import com.favshare._temp.dto.CommentDto_;
-import com.favshare._temp.dto.input.UserProfileDto;
 import com.favshare.pop.dto.comment.*;
 import com.favshare.pop.entity.Comment;
 import com.favshare.pop.entity.Pop;
@@ -27,7 +24,7 @@ public class CommentService {
 
 	private final PopRepository popRepository;
 
-	public List<CommentDto> getCommentList(GetCommentListRequest getCommentListRequest) {
+	public List<CommentResponse> getCommentList(GetCommentListRequest getCommentListRequest) {
 		int popId = getCommentListRequest.getPopId();
 		int userId = getCommentListRequest.getUserId();
 		// querydsl 검증 필요
