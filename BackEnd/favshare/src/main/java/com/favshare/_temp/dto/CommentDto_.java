@@ -24,8 +24,8 @@ public class CommentDto_ {
 	public CommentDto_(Comment comment, String nickname, String profileImageUrl, boolean isLiked) {
 		this.id = comment.getId();
 		this.content = comment.getContent();
-		this.createDate = comment.getCreateDate();
-		this.isModify = comment.isModify();
+		this.createdDate = comment.getCreatedDate();
+		this.isModified = comment.isModified();
 		this.userId = comment.getUser().getId();
 		this.popId = comment.getPop().getId();
 		this.nickname = nickname;

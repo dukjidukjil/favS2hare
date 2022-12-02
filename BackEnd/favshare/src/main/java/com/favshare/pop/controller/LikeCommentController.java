@@ -23,7 +23,7 @@ public class LikeCommentController {
 
 	@ApiOperation(value = "댓글 좋아요 클릭 시", response = ResponseEntity.class)
 	@PostMapping
-	public ResponseEntity<?> addLikeComment(@RequestBody LikeCommentRequest likeCommentRequest) {
+	public ResponseEntity addLikeComment(@RequestBody LikeCommentRequest likeCommentRequest) {
 		try {
 			likeCommentService.insertLike(likeCommentRequest);
 			return ResponseEntity.status(HttpStatus.OK).build();
@@ -34,7 +34,7 @@ public class LikeCommentController {
 
 	@ApiOperation(value = "댓글 좋아요 취소 시", response = ResponseEntity.class)
 	@DeleteMapping
-	public ResponseEntity<?> deleteLikeComment(@RequestBody LikeCommentRequest likeCommentRequest) {
+	public ResponseEntity deleteLikeComment(@RequestBody LikeCommentRequest likeCommentRequest) {
 		try {
 			likeCommentService.deleteCommentLike(likeCommentRequest);
 			return ResponseEntity.status(HttpStatus.OK).build();

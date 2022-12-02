@@ -48,40 +48,12 @@ public class PopController {
 	@ApiOperation(value = "사용자에게 맞는 팝 리스트", response = List.class)
 	@PostMapping
 	public ResponseEntity showPopList(@RequestBody GetPopListRequest getPopListRequest) {
-
-		int idolId = getPopListRequest.getIdolId();
-		int userId = getPopListRequest.getUserId();
-
 		try {
-			List<PopDto> result = new ArrayList<PopDto>();
-
-			// userId랑 idolId가 모두 1 이상이라면, 로그인한 유저가 세부 카테고리를 선택했다는 것
-			if (userId >= 1 && idolId >= 1) {
-				List<PopAlgoDto> algoList = popService.getCategoryPopList(getPopListRequest);
-
-				for (int i = 0; i < algoList.size(); i++) {
-					PopDto popDto = popService.getPopDtoById(userId, algoList.get(i).getId());
-					result.add(popDto);
-				}
-			}
-			// userId랑 idolId가 모두 0이라면 로그인하지 않은 유저라는 것 => 전체 pop을 랜덤 알고리즘으로 반환
-			else if (userId == 0 && idolId == 0) {
-
-				result = popService.getRandomPopList();
-			}
-			// 둘 다 아니라는 것은 로그인한 유저가 전체 pop을 보고있다는 것 => customAlgo를 사용
-			else {
-				List<PopAlgoDto> algoList = popService.getCustomPopList(getPopListRequest.getUserId());
-
-				for (int i = 0; i < algoList.size(); i++) {
-					PopDto popDto = popService.getPopDtoById(userId, algoList.get(i).getId());
-					result.add(popDto);
-				}
-			}
-			return new ResponseEntity<List<PopDto>>(result, HttpStatus.OK);
+			return ResponseEntity.status(HttpStatus.OK).body(popService.showPopList(getPopListRequest));
 		} catch (Exception e) {
-			return new ResponseEntity<List<PopDto>>(HttpStatus.BAD_REQUEST);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
+
 
 	}
 

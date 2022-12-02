@@ -33,11 +33,9 @@ public class LikeCommentService {
 		User user = userRepository.findById(likeCommentRequest.getUserId()).get();
 		Comment comment = commentRepository.findById(likeCommentRequest.getCommentId()).get();
 
-		int duplicate = likeCommentRepository.findByUserIdCommentID(userId, comment.getId());
-		if (duplicate >= 1) {
+		boolean hasDuplicateVal = (likeCommentRepository.findByUserIdCommentID(userId, comment.getId())>=1)?true:false;
 
-		} else {
-
+		if (hasDuplicateVal) {
 			likeComment = LikeComment.builder().user(user).comment(comment).build();
 			likeCommentRepository.save(likeComment);
 		}
@@ -49,11 +47,7 @@ public class LikeCommentService {
 	}
 
 	public boolean isLiked(int userId, int commentId) {
-		if (likeCommentRepository.isLiked(userId, commentId) == 1) {
-			return true;
-		} else {
-			return false;
-		}
+		return (likeCommentRepository.isLiked(userId, commentId) == 1)?true:false;
 	}
 
 }

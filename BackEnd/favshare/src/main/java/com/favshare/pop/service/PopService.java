@@ -54,6 +54,47 @@ public class PopService {
 
 	private final LikePopRepository likePopRepository;
 
+	public List<PopDto> showPopList(GetPopListRequest getPopListRequest){
+		int idolId = getPopListRequest.getIdolId();
+		int userId = getPopListRequest.getUserId();
+		boolean hasUser = (userRepository.findById(userId)!=null)?true:false;
+		boolean hasFavoriteIdol = (idolRepository.findById(idolId)!=null)?true:false;
+		if(hasUser && hasFavoriteIdol){
+
+		}else if(!hasUser && !hasFavoriteIdol){
+
+		}else{
+
+		}
+		return null;
+
+
+//		// userId랑 idolId가 모두 1 이상이라면, 로그인한 유저가 세부 카테고리를 선택했다는 것
+//		if (userId >= 1 && idolId >= 1) {
+//			List<PopAlgoDto> algoList = getCategoryPopList(getPopListRequest);
+//
+//			for (int i = 0; i < algoList.size(); i++) {
+//				PopDto popDto = getPopDtoById(userId, algoList.get(i).getId());
+//				result.add(popDto);
+//			}
+//		}
+//		// userId랑 idolId가 모두 0이라면 로그인하지 않은 유저라는 것 => 전체 pop을 랜덤 알고리즘으로 반환
+//		else if (userId == 0 && idolId == 0) {
+//
+//			result = getRandomPopList();
+//		}
+//		// 둘 다 아니라는 것은 로그인한 유저가 전체 pop을 보고있다는 것 => customAlgo를 사용
+//		else {
+//			List<PopAlgoDto> algoList = getCustomPopList(getPopListRequest.getUserId());
+//
+//			for (int i = 0; i < algoList.size(); i++) {
+//				PopDto popDto = getPopDtoById(userId, algoList.get(i).getId());
+//				result.add(popDto);
+//			}
+//		}
+
+	}
+
 	public void updatePopView(int popId) {
 		Pop pop = popRepository.findById(popId).get();
 		pop.changeView();

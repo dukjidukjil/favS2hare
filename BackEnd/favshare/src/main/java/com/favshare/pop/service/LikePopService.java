@@ -27,20 +27,16 @@ public class LikePopService {
 		User user = userRepository.findById(popInfoRequest.getUserId()).get();
 		Pop pop = popRepository.findById(popInfoRequest.getPopId()).get();
 
-		int duplicate = likePopRepository.findByPopIdUserId(user.getId(), pop.getId());
-		if (duplicate >= 1) {
-
-		} else {
+		boolean hasDuplicateVal = (likePopRepository.findByPopIdUserId(user.getId(), pop.getId())>=1)?true:false;
+		if (hasDuplicateVal) {
 			likePop = LikePop.builder().user(user).pop(pop).build();
 			likePopRepository.save(likePop);
-
 		}
 
 	}
 
 	public void deleteLikePop(PopInfoRequest popInfoRequest) {
-		LikePop likePop;
-		likePop = likePopRepository.searchByUserIdAndPopId(popInfoRequest.getUserId(), popInfoRequest.getPopId());
+		LikePop likePop = likePopRepository.searchByUserIdAndPopId(popInfoRequest.getUserId(), popInfoRequest.getPopId());
 		likePopRepository.deleteById(likePop.getId());
 	}
 }

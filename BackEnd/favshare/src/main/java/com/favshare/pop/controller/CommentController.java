@@ -19,8 +19,6 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/pop/comment")
 public class CommentController {
 	private final CommentService commentService;
-	private final UserService userService;
-	private final LikeCommentService likeCommentService;
 
 	@ApiOperation(value = "댓글 버튼 클릭시 - 댓글 리스트 반환", response = ResponseEntity.class)
 	@PostMapping("/list")
@@ -34,11 +32,10 @@ public class CommentController {
 
 	@ApiOperation(value = "댓글 등록", response = ResponseEntity.class)
 	@PostMapping
-	public ResponseEntity<?> addComment(@RequestBody CreateCommentRequest createCommentRequest) {
+	public ResponseEntity addComment(@RequestBody CreateCommentRequest createCommentRequest) {
 		try {
 			commentService.insertComment(createCommentRequest);
-			return new ResponseEntity<>(HttpStatus.OK);
-
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
@@ -46,10 +43,10 @@ public class CommentController {
 
 	@ApiOperation(value = "댓글 수정", response = ResponseEntity.class)
 	@PutMapping
-	public ResponseEntity<?> changeComment(@RequestBody ModifyCommentRequest modifyCommentRequest) {
+	public ResponseEntity changeComment(@RequestBody ModifyCommentRequest modifyCommentRequest) {
 		try {
 			commentService.updateComment(modifyCommentRequest);
-			return new ResponseEntity<>(HttpStatus.OK);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
@@ -57,10 +54,10 @@ public class CommentController {
 
 	@ApiOperation(value = "댓글 삭제", response = ResponseEntity.class)
 	@DeleteMapping
-	public ResponseEntity<?> deleteComment(@RequestBody DeleteCommentRequest deleteCommentRequest) {
+	public ResponseEntity deleteComment(@RequestBody DeleteCommentRequest deleteCommentRequest) {
 		try {
 			commentService.deleteComment(deleteCommentRequest);
-			return new ResponseEntity<>(HttpStatus.OK);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}

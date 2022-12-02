@@ -8,15 +8,21 @@ import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 import static com.favshare.pop.entity.QComment.comment;
 import static com.favshare.pop.entity.QPop.pop;
 import static com.favshare.user.entity.QUser.user;
 
-@RequiredArgsConstructor
+
 public class CommentRepositoryImpl implements CommentRepositoryCustom{
     private final JPAQueryFactory queryFactory;
+
+    public CommentRepositoryImpl(EntityManager em) {
+        this.queryFactory = new JPAQueryFactory(em);
+    }
+
     @Override
     public List<CommentResponse> getCommentList(int popId, int userId) {
         return queryFactory.select(Projections.constructor(CommentResponse.class,
