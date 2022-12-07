@@ -24,7 +24,7 @@ public class YoutubeEditController {
 	private YoutubeService youtubeService;
 
 	@Autowired
-	private com.favshare.pops.service.PopService PopService;
+	private com.favshare.pop.service.PopService PopService;
 
 	@ApiOperation(value = "유튜브 편집 화면 정보", response = List.class)
 	@PostMapping("/info")

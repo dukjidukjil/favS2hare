@@ -8,7 +8,7 @@ import com.favshare._temp.dto.PopDto;
 import com.favshare._temp.dto.input.FeedUserIdDto;
 import com.favshare._temp.dto.input.FollowForFollowDto;
 import com.favshare._temp.dto.input.UserProfileDto;
-import com.favshare.pops.service.PopService;
+import com.favshare.pop.service.PopService;
 import com.favshare.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
