@@ -1,12 +1,11 @@
 package com.favshare.feed.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Builder
+@Getter
 public class ModifyFeedImageRequest {
     private int feedId;
     private String feedImageUrl;
