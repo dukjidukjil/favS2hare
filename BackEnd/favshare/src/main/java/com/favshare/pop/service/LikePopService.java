@@ -10,6 +10,7 @@ import com.favshare.pop.repository.PopRepository;
 import com.favshare.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +22,7 @@ public class LikePopService {
 
 	private final PopRepository popRepository;
 
+	@Transactional
 	public void insertLikePop(PopInfoRequest popInfoRequest) {
 		LikePop likePop;
 
@@ -35,6 +37,7 @@ public class LikePopService {
 
 	}
 
+	@Transactional
 	public void deleteLikePop(PopInfoRequest popInfoRequest) {
 		LikePop likePop = likePopRepository.searchByUserIdAndPopId(popInfoRequest.getUserId(), popInfoRequest.getPopId());
 		likePopRepository.deleteById(likePop.getId());
