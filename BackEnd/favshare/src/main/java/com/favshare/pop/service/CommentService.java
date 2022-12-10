@@ -29,7 +29,6 @@ public class CommentService {
 	public List<CommentResponse> getCommentList(GetCommentListRequest getCommentListRequest) {
 		int popId = getCommentListRequest.getPopId();
 		int userId = getCommentListRequest.getUserId();
-		// querydsl 검증 필요
 		return commentRepository.getCommentList(popId, userId);
 
 //		List<com.favshare.pop.entity.Comment> commentList = commentRepository.findAllByPopId(popId);
