@@ -13,8 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.favshare.feed.exception.ErrorCode.FEED_NOT_FOUND;
-import static com.favshare.feed.exception.ErrorCode.USER_NOT_FOUND;
+import static com.favshare.global.exception.ErrorCode.FEED_NOT_FOUND;
+import static com.favshare.global.exception.ErrorCode.USER_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
