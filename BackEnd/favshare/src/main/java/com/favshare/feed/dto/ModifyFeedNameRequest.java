@@ -7,7 +7,7 @@ import lombok.*;
 @Builder
 @Getter
 
-public class ModifyFirstFeedRequest {
-    private int userId;
+public class ModifyFeedNameRequest {
     private int feedId;
+    private String feedName;
 }

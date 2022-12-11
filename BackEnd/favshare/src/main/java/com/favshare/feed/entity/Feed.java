@@ -17,8 +17,6 @@ import java.util.List;
 @Table(name="feed")
 public class Feed extends BaseEntity {
 
-
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "feed_id")
@@ -44,12 +42,11 @@ public class Feed extends BaseEntity {
 		this.feedImageUrl = feedImageUrl;
 	}
 
-	public void changeIsFirst() {
+	public void changeToFirst() {
 		this.isFirst = true;
-
 	}
 
-	public void changeIsNotFirst() {
+	public void changeNotToFirst() {
 		this.isFirst = false;
 	}
 
