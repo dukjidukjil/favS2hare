@@ -30,6 +30,7 @@ import com.favshare.pop.repository.PopRepository;
 import com.favshare.pop.repository.ShowPopRepository;
 import com.favshare.user.repository.UserRepository;
 import com.favshare.youtube.repository.YoutubeRepository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
@@ -54,6 +55,7 @@ public class PopService {
 
 	private final LikePopRepository likePopRepository;
 
+	@Transactional
 	public List<PopDto> showPopList(GetPopListRequest getPopListRequest){
 		int idolId = getPopListRequest.getIdolId();
 		int userId = getPopListRequest.getUserId();
@@ -95,12 +97,14 @@ public class PopService {
 
 	}
 
+	@Transactional
 	public void updatePopView(int popId) {
 		Pop pop = popRepository.findById(popId).get();
 		pop.changeView();
 		popRepository.save(pop);
 	}
 
+	@Transactional
 	public PopInfoResponse showPopInfo(PopInfoRequest popInfoRequest){
 		int popId = popInfoRequest.getPopId();
 		int userId = popInfoRequest.getUserId();
@@ -113,6 +117,7 @@ public class PopService {
 		return PopInfoResponse.builder().popInfoDto(popInfoDto).userProfileDto(userProfileDto).build();
 	}
 
+	@Transactional
 	public PopInfoFromOriginYoutubeResponse getPopInfoFromOriginYoutube(@RequestBody PopInfoRequest popInfoRequest){
 		int userId = popInfoRequest.getUserId();
 		int popId = popInfoRequest.getPopId();
@@ -124,6 +129,7 @@ public class PopService {
 
 	}
 
+	@Transactional
 	public PopInfoDto getPopInfoById(int popId, int userId) {
 		Pop pop = popRepository.findById(popId).get();
 		boolean isLiked;
@@ -138,6 +144,7 @@ public class PopService {
 		return popInfoDto;
 	}
 
+	@Transactional
 	public boolean isLiked(int userId, int popId) {
 		if (likePopRepository.isLiked(userId, popId) == 1) {
 			return true;
@@ -146,6 +153,7 @@ public class PopService {
 		}
 	}
 
+	@Transactional
 	public PopDto getPopDtoById(int userId, int popId) {
 		Pop pop = popRepository.findById(popId).get();
 
@@ -155,6 +163,7 @@ public class PopService {
 	}
 
 	// 유튜브 찾은 후 그에 맞는
+	@Transactional
 	public List<PopDto> getPopListById(int userId, int popId, int youtubeId) {
 		YoutubeEntity youtubeEntity = youtubeRepository.findById(youtubeId).get();
 		List<PopDto> popList = new ArrayList<>();
@@ -165,6 +174,7 @@ public class PopService {
 		return popList;
 	}
 
+	@Transactional
 	public void insertPop(YoutubeEditPopDto youtubeEditPopDto) {
 		User user = userRepository.findById(youtubeEditPopDto.getUserId()).get();
 		YoutubeEntity youtubeEntity = youtubeRepository.findByUrl(youtubeEditPopDto.getYoutubeUrl());
@@ -195,11 +205,13 @@ public class PopService {
 
 	}
 
+	@Transactional
 	public int getPopCount(int userId) {
 		User user = userRepository.findById(userId).get();
 		return user.getPopList().size();
 	}
 
+	@Transactional
 	public void deletePop(DeletePopRequest deletePopRequest) {
 		List<Integer> popIdList = deletePopRequest.getPopIdList();
 		for (int i = 0; i < popIdList.size(); i++) {
@@ -207,6 +219,7 @@ public class PopService {
 		}
 	}
 
+	@Transactional
 	public boolean isWatched(int userId, int popId) {
 		if (showPopRepository.searchByUserPopId(userId, popId) >= 1) {
 			return true;
@@ -214,6 +227,7 @@ public class PopService {
 			return false;
 	}
 
+	@Transactional
 	public List<PopAlgoDto> getCustomPopList(int userId) {
 		// 조회수, 좋아요수, 팔로워 수 를 통해 알고리즘 구현 (5 : 3 : 2 의 가중치 부여)
 
@@ -264,6 +278,7 @@ public class PopService {
 
 	}
 
+	@Transactional
 	public List<PopDto> getRandomPopList() {
 		List<Pop> popList = popRepository.findAll();
 		List<Pop> randomPopList = new ArrayList<Pop>();
@@ -289,6 +304,7 @@ public class PopService {
 		return result;
 	}
 
+	@Transactional
 	public List<PopAlgoDto> getCategoryPopList(GetPopListRequest getPopListRequest) {
 		double referenceValue; // maxValues의 중간값
 		int[] value = new int[3]; // 순서대로 조회수, 좋아요수, 팔로워수
@@ -339,6 +355,7 @@ public class PopService {
 		return algoList;
 	}
 
+	@Transactional
 	public List<Integer> findSimilarIdolInterst(int userId, int idolId) {
 		List<InterestIdolEntity> interestIdolEntityList = interestIdolRepository.findByIdolIdExceptUserId(userId,
 				idolId);
@@ -361,6 +378,7 @@ public class PopService {
 //		return result;
 //	}
 
+	@Transactional
 	public List<PopDto> popDtoListByUserId(int userId) {
 		User user = userRepository.findById(userId).get();
 		List<Pop> pop = user.getPopList();
@@ -369,6 +387,7 @@ public class PopService {
 		return popDtoList;
 	}
 
+	@Transactional
 	public List<PopDto> popDtoListByKeyword(String keyword, int userId) {
 
 		List<Pop> popList = popRepository.findByKeywordContains(keyword);
@@ -380,7 +399,7 @@ public class PopService {
 		}
 		return popDtoList;
 	}
-
+	@Transactional
 	public List<IdolDto> getInterestIdolList(int userId) {
 		List<InterestIdolEntity> idolList = interestIdolRepository.findAllByUserId(userId);
 		List<IdolDto> result = new ArrayList<IdolDto>();
@@ -393,6 +412,7 @@ public class PopService {
 		return result;
 	}
 
+	@Transactional
 	public void insertShowPop(int popId, int userId) {
 		Pop pop = popRepository.getById(popId);
 		User user = userRepository.getById(userId);

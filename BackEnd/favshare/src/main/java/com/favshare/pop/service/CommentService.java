@@ -13,6 +13,7 @@ import com.favshare.pop.repository.PopRepository;
 import com.favshare.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,10 +25,10 @@ public class CommentService {
 
 	private final PopRepository popRepository;
 
+	@Transactional
 	public List<CommentResponse> getCommentList(GetCommentListRequest getCommentListRequest) {
 		int popId = getCommentListRequest.getPopId();
 		int userId = getCommentListRequest.getUserId();
-		// querydsl 검증 필요
 		return commentRepository.getCommentList(popId, userId);
 
 //		List<com.favshare.pop.entity.Comment> commentList = commentRepository.findAllByPopId(popId);
@@ -42,6 +43,7 @@ public class CommentService {
 //		}
 	}
 
+	@Transactional
 	public void insertComment(CreateCommentRequest createCommentRequest) {
 		int userId = createCommentRequest.getUserId();
 		int popId = createCommentRequest.getPopId();
@@ -56,6 +58,7 @@ public class CommentService {
 		commentRepository.save(commentDto);
 	}
 
+	@Transactional
 	public void updateComment(ModifyCommentRequest modifyCommentRequest) {
 		int userId = modifyCommentRequest.getUserId();
 		int commentId = modifyCommentRequest.getCommentId();
@@ -65,6 +68,7 @@ public class CommentService {
 		comment.changeComment(content);
 	}
 
+	@Transactional
 	public void deleteComment(DeleteCommentRequest deleteCommentRequest) {
 		int userId = deleteCommentRequest.getUserId();
 		int commentId = deleteCommentRequest.getCommentId();

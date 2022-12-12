@@ -2,15 +2,21 @@ package com.favshare.popInFeed.service;
 
 import java.util.List;
 
-import com.favshare._temp.dto.input.FeedPopIdDto;
 import com.favshare.feed.entity.Feed;
 import com.favshare.feed.repository.FeedRepository;
+import com.favshare.global.exception.CustomException;
 import com.favshare.pop.entity.Pop;
+import com.favshare.popInFeed.dto.PopInFeedRequest;
 import com.favshare.popInFeed.entity.PopInFeedEntity;
 import com.favshare.popInFeed.repository.PopInFeedRepository;
 import com.favshare.pop.repository.PopRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import static com.favshare.global.exception.ErrorCode.FEED_NOT_FOUND;
+import static com.favshare.global.exception.ErrorCode.POP_NOT_FOUND;
+
 
 @Service
 @RequiredArgsConstructor
@@ -22,21 +28,21 @@ public class PopInFeedService {
 
 	private final PopRepository popRepository;
 
-	public void insertPopInFeed(FeedPopIdDto feedPopIdDto) {
-		 
-
-		for (int i = 0; i < feedPopIdDto.getPopId().size(); i++) {
-			Feed feedEntity = feedRepository.findById(feedPopIdDto.getFeedId()).get();
-			Pop pop = popRepository.findById(feedPopIdDto.getPopId().get(i)).get();
+	@Transactional
+	public void insertPopInFeed(PopInFeedRequest popInFeedRequest) {
+		for (int i = 0; i < popInFeedRequest.getPopId().size(); i++) {
+			Feed feedEntity = feedRepository.findById(popInFeedRequest.getFeedId()).orElseThrow(() -> new CustomException(FEED_NOT_FOUND));
+			Pop pop = popRepository.findById(popInFeedRequest.getPopId().get(i)).orElseThrow(() -> new CustomException(POP_NOT_FOUND));
 			PopInFeedEntity popInFeedEntity = PopInFeedEntity.builder().feedEntity(feedEntity).pop(pop).build();
 			popInFeedRepository.save(popInFeedEntity);
 		}
 
 	}
 
-	public void deletePopInFeed(FeedPopIdDto feedPopIdDto) {
-		int feedId = feedPopIdDto.getFeedId();
-		List<Integer> popIdList = feedPopIdDto.getPopId();
+	@Transactional
+	public void deletePopInFeed(PopInFeedRequest popInFeedRequest) {
+		int feedId = popInFeedRequest.getFeedId();
+		List<Integer> popIdList = popInFeedRequest.getPopId();
 		for (int i = 0; i < popIdList.size(); i++) {
 			popInFeedRepository.deleteByPopFeedId(feedId, popIdList.get(i));
 		}
