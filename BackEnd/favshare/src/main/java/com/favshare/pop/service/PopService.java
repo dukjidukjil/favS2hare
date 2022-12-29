@@ -7,13 +7,17 @@ import com.favshare._temp.dto.IdolDto;
 import com.favshare._temp.dto.PopAlgoDto;
 import com.favshare._temp.dto.PopDto;
 import com.favshare._temp.dto.PopInfoDto;
+import com.favshare._temp.dto.input.FriendFeedDto;
 import com.favshare._temp.dto.input.IdolUserIdDto;
 import com.favshare._temp.dto.input.UserProfileDto;
 import com.favshare._temp.dto.input.YoutubeEditPopDto;
 import com.favshare.feed.entity.Feed;
 import com.favshare.feed.repository.FeedRepository;
 import com.favshare.pop.dto.pop.*;
+import com.favshare.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.favshare.idol.entity.IdolEntity;
 import com.favshare.idol.entity.InterestIdolEntity;
@@ -38,22 +42,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class PopService {
 
 	private final PopRepository popRepository;
-
 	private final YoutubeRepository youtubeRepository;
-
 	private final UserRepository userRepository;
-
 	private final PopInFeedRepository popInFeedRepository;
-
 	private final FeedRepository feedRepository;
-
 	private final IdolRepository idolRepository;
-
 	private final ShowPopRepository showPopRepository;
-
 	private final InterestIdolRepository interestIdolRepository;
-
 	private final LikePopRepository likePopRepository;
+	private final UserService userService;
+	private final PopService popService;
 
 	@Transactional
 	public List<PopDto> showPopList(GetPopListRequest getPopListRequest){
@@ -61,39 +59,29 @@ public class PopService {
 		int userId = getPopListRequest.getUserId();
 		boolean hasUser = (userRepository.findById(userId)!=null)?true:false;
 		boolean hasFavoriteIdol = (idolRepository.findById(idolId)!=null)?true:false;
+		List<PopDto> result = new ArrayList<>();
+		// 로그인한 유저가 세부 카테고리를 선택한 경우
 		if(hasUser && hasFavoriteIdol){
-
+			List<PopAlgoDto> algoList = getCategoryPopList(getPopListRequest);
+			for (int i = 0; i < algoList.size(); i++) {
+				PopDto popDto = getPopDtoById(userId, algoList.get(i).getId());
+				result.add(popDto);
+			}
+		// 로그인하지 않은 유저 -> 전체 pop을 랜덤 알고리즘으로 반환
 		}else if(!hasUser && !hasFavoriteIdol){
-
+			result = getRandomPopList();
+		// 로그인한 유저가 전체 pop을 보고있다는 것 => customAlgo를 사용
 		}else{
+			List<PopAlgoDto> algoList = getCustomPopList(getPopListRequest.getUserId());
+
+			for (int i = 0; i < algoList.size(); i++) {
+				PopDto popDto = getPopDtoById(userId, algoList.get(i).getId());
+				result.add(popDto);
+			}
 
 		}
-		return null;
+		return result;
 
-
-//		// userId랑 idolId가 모두 1 이상이라면, 로그인한 유저가 세부 카테고리를 선택했다는 것
-//		if (userId >= 1 && idolId >= 1) {
-//			List<PopAlgoDto> algoList = getCategoryPopList(getPopListRequest);
-//
-//			for (int i = 0; i < algoList.size(); i++) {
-//				PopDto popDto = getPopDtoById(userId, algoList.get(i).getId());
-//				result.add(popDto);
-//			}
-//		}
-//		// userId랑 idolId가 모두 0이라면 로그인하지 않은 유저라는 것 => 전체 pop을 랜덤 알고리즘으로 반환
-//		else if (userId == 0 && idolId == 0) {
-//
-//			result = getRandomPopList();
-//		}
-//		// 둘 다 아니라는 것은 로그인한 유저가 전체 pop을 보고있다는 것 => customAlgo를 사용
-//		else {
-//			List<PopAlgoDto> algoList = getCustomPopList(getPopListRequest.getUserId());
-//
-//			for (int i = 0; i < algoList.size(); i++) {
-//				PopDto popDto = getPopDtoById(userId, algoList.get(i).getId());
-//				result.add(popDto);
-//			}
-//		}
 
 	}
 
@@ -232,7 +220,7 @@ public class PopService {
 		// 조회수, 좋아요수, 팔로워 수 를 통해 알고리즘 구현 (5 : 3 : 2 의 가중치 부여)
 
 		List<Pop> popList = popRepository.findAll();
-		List<PopAlgoDto> algoList = new ArrayList<PopAlgoDto>();
+		List<PopAlgoDto> algoList = new ArrayList<>();
 		double referenceValue; // maxValues의 중간값
 		int[] value = new int[3]; // 순서대로 조회수, 좋아요수, 팔로워수
 		int[] maxValue = new int[3]; //
@@ -367,17 +355,6 @@ public class PopService {
 		return result;
 	}
 
-//	public List<Integer> findSimilarSongInterst(int userId, int songId) {
-//		List<InterestSongEntity> interestSongEntityList = interestSongRepository.findBySongIdExceptUserId(userId,
-//				songId);
-//
-//		List<Integer> result = new ArrayList<Integer>();
-//		for (int i = 0; i < interestSongEntityList.size(); i++) {
-//			result.add(interestSongEntityList.get(i).getUser().getId());
-//		}
-//		return result;
-//	}
-
 	@Transactional
 	public List<PopDto> popDtoListByUserId(int userId) {
 		User user = userRepository.findById(userId).get();
@@ -421,5 +398,63 @@ public class PopService {
 		showPopRepository.save(showPop);
 
 	}
+
+	@Transactional
+	public List<FriendFeedDto> showFriendList(int userId){
+		List<FriendFeedDto> friendsPopList = userService.getFollowingList(userId);
+		if (friendsPopList.size() == 0) { // 친구가 없으면 -> 알고리즘으로 뿌려주기
+			List<FriendFeedDto> result = new ArrayList<FriendFeedDto>();
+
+			// 1. 나를 팔로우 한 사람
+			List<UserProfileDto> UserProfileDtoList = userService.getFollowerList(userId);
+			for (int i = 0; i < UserProfileDtoList.size(); i++) {
+				int id = UserProfileDtoList.get(i).getId();
+				// id로 이사람의 userProfileDto 가져오기
+				UserProfileDto userProfileDto = userService.getUserProfileById(id);
+				// id로 이사람의 popDtoList가져오기
+				List<PopDto> popDtoList = popService.popDtoListByUserId(id);
+				// popDtoList를 for문으로 돌면서
+				for (int j = 0; j < popDtoList.size(); j++) {
+					// new FriendFeedDto한걸 result에 넣어주기
+					result.add(new FriendFeedDto(userProfileDto, popDtoList.get(j)));
+				}
+			}
+
+			// 3. 관심사가 비슷한 사람
+			// 내 관심사
+			List<IdolDto> myInterestIdolList = userService.getInterestIdolList(userId);
+
+			// 나와 관심사가 동일한 사람
+			HashSet<Integer> similarPersonId = new HashSet<Integer>();
+
+			Iterator<Integer> iter = similarPersonId.iterator();
+			while (iter.hasNext()) {
+				int id = iter.next();
+				// id로 이사람의 userProfileDto 가져오기
+				UserProfileDto userProfileDto = userService.getUserProfileById(id);
+				// id로 이사람의 popDtoList가져오기
+				List<PopDto> popDtoList = popService.popDtoListByUserId(id);
+				// popDtoList를 for문으로 돌면서
+				for (int j = 0; j < popDtoList.size(); j++) {
+					// new FriendFeedDto한걸 result에 넣어주기
+					result.add(new FriendFeedDto(userProfileDto, popDtoList.get(j)));
+				}
+
+			}
+			return result;
+
+			// 4. 랜덤
+		} else { // 친구가 있으면 -> 내 친구들의 팝들 최신순으로 보여주기
+			friendsPopList.sort(new Comparator<FriendFeedDto>() {
+				@Override
+				public int compare(FriendFeedDto o1, FriendFeedDto o2) {
+					return o2.getPopDto().getCreateDate().compareTo(o1.getPopDto().getCreateDate());
+				}
+			});
+			return friendsPopList;
+		}
+
+	}
+
 
 }
