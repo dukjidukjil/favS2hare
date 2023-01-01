@@ -51,7 +51,6 @@ public class PopService {
 	private final InterestIdolRepository interestIdolRepository;
 	private final LikePopRepository likePopRepository;
 	private final UserService userService;
-	private final PopService popService;
 
 	@Transactional
 	public List<PopDto> showPopList(GetPopListRequest getPopListRequest){
@@ -412,7 +411,7 @@ public class PopService {
 				// id로 이사람의 userProfileDto 가져오기
 				UserProfileDto userProfileDto = userService.getUserProfileById(id);
 				// id로 이사람의 popDtoList가져오기
-				List<PopDto> popDtoList = popService.popDtoListByUserId(id);
+				List<PopDto> popDtoList = popDtoListByUserId(id);
 				// popDtoList를 for문으로 돌면서
 				for (int j = 0; j < popDtoList.size(); j++) {
 					// new FriendFeedDto한걸 result에 넣어주기
@@ -433,7 +432,7 @@ public class PopService {
 				// id로 이사람의 userProfileDto 가져오기
 				UserProfileDto userProfileDto = userService.getUserProfileById(id);
 				// id로 이사람의 popDtoList가져오기
-				List<PopDto> popDtoList = popService.popDtoListByUserId(id);
+				List<PopDto> popDtoList = popDtoListByUserId(id);
 				// popDtoList를 for문으로 돌면서
 				for (int j = 0; j < popDtoList.size(); j++) {
 					// new FriendFeedDto한걸 result에 넣어주기
