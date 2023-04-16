@@ -1,6 +1,4 @@
-package com.favshare._temp.dto.input;
-
-import com.favshare._temp.dto.PopDto;
+package com.favshare.pop.dto.pop;
 
 import lombok.*;
 

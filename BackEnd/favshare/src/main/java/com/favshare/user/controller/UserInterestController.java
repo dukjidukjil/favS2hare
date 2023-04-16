@@ -1,9 +1,8 @@
 package com.favshare.user.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
-import com.favshare._temp.dto.IdolDto;
+import com.favshare.idol.dto.IdolDto;
 import com.favshare._temp.dto.input.InterestSaveDto;
 import com.favshare.idol.entity.IdolEntity;
 import com.favshare.idol.service.IdolService;

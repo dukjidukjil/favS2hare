@@ -1,6 +1,5 @@
 package com.favshare.pop.dto.pop;
 
-import com.favshare._temp.dto.PopDto;
 import lombok.*;
 
 import java.util.List;

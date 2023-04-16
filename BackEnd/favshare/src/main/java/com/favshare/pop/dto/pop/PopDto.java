@@ -1,16 +1,14 @@
-package com.favshare._temp.dto;
+package com.favshare.pop.dto.pop;
 
 import java.time.LocalDateTime;
 
 import com.favshare.pop.entity.Pop;
-import com.favshare.youtube.entity.YoutubeEntity;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
-public class PopInfoDto {
+public class PopDto {
 	private int id;
 	private String name;
 	private int startSecond;
@@ -19,13 +17,12 @@ public class PopInfoDto {
 	private LocalDateTime createDate;
 	private int views;
 	private int likeCount;
-	private int userId;
-	private int youtubeId;
-	private String url;
+	private String youtubeUrl;
 	private boolean isLiked;
+	private int userId;
 	private boolean isMuted;
 
-	public PopInfoDto(Pop pop, YoutubeEntity youtubeEntity, boolean isLiked) {
+	public PopDto(Pop pop, boolean isLiked) {
 		this.id = pop.getId();
 		this.name = pop.getName();
 		this.startSecond = pop.getStartSecond();
@@ -34,8 +31,7 @@ public class PopInfoDto {
 		this.createDate = pop.getCreateDate();
 		this.views = pop.getViews();
 		this.likeCount = pop.getLikePopList().size();
-		this.youtubeId = youtubeEntity.getId();
-		this.url = youtubeEntity.getUrl();
+		this.youtubeUrl = pop.getYoutubeEntity().getUrl();
 		this.isLiked = isLiked;
 		this.userId = pop.getUser().getId();
 		this.isMuted = pop.isMuted();

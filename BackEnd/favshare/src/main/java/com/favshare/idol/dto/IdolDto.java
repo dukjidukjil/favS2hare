@@ -1,4 +1,4 @@
-package com.favshare._temp.dto;
+package com.favshare.idol.dto;
 
 import com.favshare.idol.entity.IdolEntity;
 

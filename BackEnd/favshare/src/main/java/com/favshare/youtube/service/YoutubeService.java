@@ -2,7 +2,6 @@ package com.favshare.youtube.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -10,7 +9,7 @@ import java.util.Random;
 
 
 import com.favshare._temp.dto.FeedDto;
-import com.favshare._temp.dto.PopDto;
+import com.favshare.pop.dto.pop.PopDto;
 import com.favshare.idol.entity.InterestIdolEntity;
 import com.favshare.user.entity.User;
 import com.favshare.youtube.dto.YoutubeDetail;
@@ -18,8 +17,6 @@ import com.favshare.youtube.dto.YoutubeInfoRequest;
 import com.favshare.youtube.dto.YoutubeRequest;
 import com.favshare.youtube.entity.YoutubeEntity;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.favshare.idol.repository.IdolRepository;

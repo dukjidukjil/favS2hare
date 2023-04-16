@@ -2,9 +2,9 @@ package com.favshare.user.controller;
 
 import java.util.HashMap;
 
-import com.favshare._temp.dto.PopDto;
+import com.favshare.pop.dto.pop.PopDto;
 import com.favshare._temp.dto.input.UserPopIdDto;
-import com.favshare._temp.dto.input.UserProfileDto;
+import com.favshare.pop.dto.pop.UserProfileDto;
 import com.favshare.pop.service.PopService;
 import com.favshare.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

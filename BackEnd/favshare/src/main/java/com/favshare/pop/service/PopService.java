@@ -6,6 +6,7 @@ import java.util.*;
 
 import com.favshare.feed.entity.Feed;
 import com.favshare.feed.repository.FeedRepository;
+import com.favshare.idol.dto.IdolDto;
 import com.favshare.pop.dto.pop.*;
 import com.favshare.user.service.UserService;
 import com.favshare.youtube.dto.YoutubeEditPopRequest;

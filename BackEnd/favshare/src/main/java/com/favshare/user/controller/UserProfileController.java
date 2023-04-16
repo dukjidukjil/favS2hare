@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.favshare._temp.dto.FeedDto;
-import com.favshare._temp.dto.PopDto;
+import com.favshare.pop.dto.pop.PopDto;
 import com.favshare._temp.dto.input.FeedUserIdDto;
 import com.favshare._temp.dto.input.FollowForFollowDto;
-import com.favshare._temp.dto.input.UserProfileDto;
+import com.favshare.pop.dto.pop.UserProfileDto;
 import com.favshare.pop.service.PopService;
 import com.favshare.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

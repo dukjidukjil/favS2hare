@@ -1,7 +1,5 @@
 package com.favshare.pop.dto.pop;
 
-import com.favshare._temp.dto.PopInfoDto;
-import com.favshare._temp.dto.input.UserProfileDto;
 import lombok.*;
 
 @Getter

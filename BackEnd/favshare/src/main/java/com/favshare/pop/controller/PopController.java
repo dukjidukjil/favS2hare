@@ -1,20 +1,12 @@
 package com.favshare.pop.controller;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 
-import com.favshare._temp.dto.input.FriendFeedDto;
-import com.favshare._temp.dto.input.UserPopIdDto;
-import com.favshare._temp.dto.input.UserProfileDto;
+import com.favshare.pop.dto.pop.FriendFeedDto;
 import com.favshare.pop.dto.UserIdRequest;
 import com.favshare.pop.dto.pop.DeletePopRequest;
 import com.favshare.pop.dto.pop.GetPopListRequest;
 import com.favshare.pop.dto.pop.PopInfoRequest;
-import com.favshare.pop.dto.pop.PopInfoResponse;
 import com.favshare.pop.service.LikePopService;
 import com.favshare.pop.service.PopService;
 import com.favshare.user.service.UserService;
@@ -30,10 +22,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.favshare._temp.dto.PopAlgoDto;
-import com.favshare._temp.dto.IdolDto;
-import com.favshare._temp.dto.PopDto;
-import com.favshare._temp.dto.PopInfoDto;
+import com.favshare.idol.dto.IdolDto;
+import com.favshare.pop.dto.pop.PopInfoDto;
 
 import io.swagger.annotations.ApiOperation;
 

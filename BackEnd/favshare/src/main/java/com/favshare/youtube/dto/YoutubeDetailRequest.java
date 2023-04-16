@@ -1,6 +1,6 @@
 package com.favshare.youtube.dto;
 
-import com.favshare._temp.dto.PopDto;
+import com.favshare.pop.dto.pop.PopDto;
 import com.favshare.youtube.entity.YoutubeEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
