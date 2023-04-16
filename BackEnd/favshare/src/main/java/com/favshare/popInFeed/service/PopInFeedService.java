@@ -20,6 +20,7 @@ import static com.favshare.global.exception.ErrorCode.POP_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class PopInFeedService {
 
 	private final PopInFeedRepository popInFeedRepository;

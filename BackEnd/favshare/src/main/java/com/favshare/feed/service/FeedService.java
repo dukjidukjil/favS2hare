@@ -18,6 +18,7 @@ import static com.favshare.global.exception.ErrorCode.USER_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class FeedService {
 	private final FeedRepository feedRepository;
 	private final UserRepository userRepository;

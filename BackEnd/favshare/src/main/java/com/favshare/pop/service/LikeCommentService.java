@@ -1,7 +1,6 @@
 package com.favshare.pop.service;
 
 
-import com.favshare._temp.dto.input.UserCommentIdDto;
 import com.favshare.pop.dto.likecomment.LikeCommentRequest;
 import com.favshare.pop.entity.Comment;
 import com.favshare.pop.entity.LikeComment;
@@ -17,6 +16,7 @@ import com.favshare.pop.repository.LikeCommentRepository;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class LikeCommentService {
 
 	private final LikeCommentRepository likeCommentRepository;

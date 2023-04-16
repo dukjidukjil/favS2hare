@@ -9,17 +9,14 @@ import com.favshare.feed.repository.FeedRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import com.favshare._temp.dto.FeedDto;
+
 import com.favshare.idol.dto.IdolDto;
 import com.favshare.pop.dto.pop.PopDto;
-import com.favshare._temp.dto.UserAccountDto;
-import com.favshare._temp.dto.input.EmailPasswordDto;
-import com.favshare._temp.dto.input.FeedUserIdDto;
-import com.favshare._temp.dto.input.FollowForFollowDto;
+
 import com.favshare.pop.dto.pop.FriendFeedDto;
-import com.favshare._temp.dto.input.UserInfoDto;
+
 import com.favshare.pop.dto.pop.UserProfileDto;
-import com.favshare._temp.dto.input.UserSignUpDto;
+
 import com.favshare.follow.entity.FollowEntity;
 import com.favshare.idol.entity.IdolEntity;
 import com.favshare.idol.entity.InterestIdolEntity;
@@ -30,9 +27,11 @@ import com.favshare.follow.repository.FollowRepository;
 import com.favshare.idol.repository.InterestIdolRepository;
 import com.favshare.pop.repository.LikePopRepository;
 import com.favshare.user.repository.UserRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class UserService {
 
 	private final  UserRepository userRepository;

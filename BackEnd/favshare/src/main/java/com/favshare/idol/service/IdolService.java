@@ -5,11 +5,12 @@ import java.util.List;
 import com.favshare.idol.entity.IdolEntity;
 import com.favshare.idol.repository.IdolRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class IdolService {
 	private final IdolRepository idolRepository;
 

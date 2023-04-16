@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 
 import com.favshare.follow.entity.FollowEntity;
 import com.favshare.user.entity.User;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class FollowService {
 	private final FollowRepository followRepository;
 

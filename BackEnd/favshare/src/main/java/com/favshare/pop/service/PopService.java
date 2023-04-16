@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class PopService {
 
 	private final PopRepository popRepository;

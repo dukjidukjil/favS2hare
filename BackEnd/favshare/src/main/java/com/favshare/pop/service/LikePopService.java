@@ -1,6 +1,6 @@
 package com.favshare.pop.service;
 
-import com.favshare._temp.dto.input.UserPopIdDto;
+
 import com.favshare.pop.dto.pop.PopInfoRequest;
 import com.favshare.pop.entity.LikePop;
 import com.favshare.pop.entity.Pop;
@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class LikePopService {
 
 	private final LikePopRepository likePopRepository;
