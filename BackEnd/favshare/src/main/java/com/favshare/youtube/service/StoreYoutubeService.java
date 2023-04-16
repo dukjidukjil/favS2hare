@@ -3,8 +3,8 @@ package com.favshare.youtube.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.favshare._temp.dto.YoutubeDto;
-import com.favshare._temp.dto.input.YoutubeUserIdDto;
+import com.favshare.youtube.dto.YoutubeRequest;
+import com.favshare.youtube.dto.YoutubeResponse;
 import com.favshare.youtube.entity.StoreYoutubeEntity;
 import com.favshare.user.entity.User;
 import com.favshare.youtube.entity.YoutubeEntity;
@@ -12,7 +12,6 @@ import com.favshare.youtube.repository.StoreYoutubeRepository;
 import com.favshare.user.repository.UserRepository;
 import com.favshare.youtube.repository.YoutubeRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,7 +24,7 @@ public class StoreYoutubeService {
 
 	private final  UserRepository userRepository;
 
-	public void insertBookmark(YoutubeUserIdDto youtubeUserIdDto) {
+	public void insertBookmark(YoutubeRequest youtubeUserIdDto) {
 
 		insertYoutube(youtubeUserIdDto);
 
@@ -45,7 +44,7 @@ public class StoreYoutubeService {
 		}
 	}
 
-	public void insertYoutube(YoutubeUserIdDto youtubeUserIdDto) {
+	public void insertYoutube(YoutubeRequest youtubeUserIdDto) {
 		if (youtubeRepository.isDuplicated(youtubeUserIdDto.getYoutubeUrl()) < 1) {
 
 			YoutubeEntity youtubeEntity = YoutubeEntity.builder().url(youtubeUserIdDto.getYoutubeUrl()).build();
@@ -53,20 +52,20 @@ public class StoreYoutubeService {
 		}
 	}
 
-	public List<YoutubeDto> getYoutubeBookmarkById(int id) {
+	public List<YoutubeResponse> getYoutubeBookmarkById(int id) {
 		User user;
 		user = userRepository.findById(id).get();
 
 		List<StoreYoutubeEntity> storeYoutubeList = user.getStoreYoutubeList();
 
-		List<YoutubeDto> result = new ArrayList<YoutubeDto>();
+		List<YoutubeResponse> result = new ArrayList<YoutubeResponse>();
 		for (int i = 0; i < storeYoutubeList.size(); i++) {
-			result.add(new YoutubeDto(storeYoutubeList.get(i).getYoutubeEntity()));
+			result.add(new YoutubeResponse(storeYoutubeList.get(i).getYoutubeEntity()));
 		}
 		return result;
 	}
 
-	public void deleteYoutubeBookMarkById(YoutubeUserIdDto youtubeUserIdDto) {
+	public void deleteYoutubeBookMarkById(YoutubeRequest youtubeUserIdDto) {
 		StoreYoutubeEntity storeYoutubeEntity;
 		YoutubeEntity youtubeEntity = youtubeRepository.findByUrl(youtubeUserIdDto.getYoutubeUrl());
 

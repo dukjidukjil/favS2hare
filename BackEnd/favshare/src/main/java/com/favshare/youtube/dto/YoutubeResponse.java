@@ -1,23 +1,17 @@
-package com.favshare._temp.dto;
-
-import java.util.List;
+package com.favshare.youtube.dto;
 
 import com.favshare.youtube.entity.YoutubeEntity;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class YoutubDetailDto {
+public class YoutubeResponse {
 	private int id;
 	private String url;
 
-	private List<PopDto> popList;
-
-	public YoutubDetailDto(YoutubeEntity youtubeEntity) {
+	public YoutubeResponse(YoutubeEntity youtubeEntity) {
 		this.id = youtubeEntity.getId();
 		this.url = youtubeEntity.getUrl();
 	}
-
 }

@@ -1,23 +1,23 @@
-package com.favshare._temp.dto;
+package com.favshare.youtube.dto;
+
+import com.favshare._temp.dto.FeedDto;
+import com.favshare.user.entity.User;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.favshare.user.entity.User;
-
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 @Data
 @NoArgsConstructor
-public class YoutubeInfoDto {
+public class YoutubeInfoRequest {
 
 	private int userId;
 	private String url;
 
 	private List<FeedDto> feedList = new ArrayList<>();
 
-	public YoutubeInfoDto(User user, String url) {
+	public YoutubeInfoRequest(User user, String url) {
 		this.userId = user.getId();
 		this.url = url;
 	}

@@ -11,11 +11,11 @@ import java.util.Random;
 
 import com.favshare._temp.dto.FeedDto;
 import com.favshare._temp.dto.PopDto;
-import com.favshare._temp.dto.YoutubeDetailDto;
-import com.favshare._temp.dto.YoutubeInfoDto;
-import com.favshare._temp.dto.input.YoutubeUserIdDto;
 import com.favshare.idol.entity.InterestIdolEntity;
 import com.favshare.user.entity.User;
+import com.favshare.youtube.dto.YoutubeDetail;
+import com.favshare.youtube.dto.YoutubeInfoRequest;
+import com.favshare.youtube.dto.YoutubeRequest;
 import com.favshare.youtube.entity.YoutubeEntity;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -84,12 +84,12 @@ public class YoutubeService {
 
 	}
 
-	public YoutubeDetailDto getDetailByUrl(YoutubeUserIdDto youtubeUSerIdDto) {
+	public YoutubeDetail getDetailByUrl(YoutubeRequest youtubeUSerIdDto) {
 		YoutubeEntity youtubeEntity;
 		youtubeEntity = youtubeRepository.findByUrl(youtubeUSerIdDto.getYoutubeUrl());
 
 		List<PopDto> popList;
-		YoutubeDetailDto result;
+		YoutubeDetail result;
 		int youtubeId = youtubeRepository.findByUrl(youtubeUSerIdDto.getYoutubeUrl()).getId();
 		boolean isBookmarked;
 
@@ -99,7 +99,7 @@ public class YoutubeService {
 			isBookmarked = false;
 		}
 
-		result = new YoutubeDetailDto(youtubeUSerIdDto.getYoutubeUrl(), isBookmarked);
+		result = new YoutubeDetail(youtubeUSerIdDto.getYoutubeUrl(), isBookmarked);
 
 		if (youtubeEntity == null) {
 			popList = null;
@@ -175,10 +175,10 @@ public class YoutubeService {
 
 	}
 
-	public YoutubeInfoDto getEditInfoByUrl(YoutubeUserIdDto youtubeUserIdDto) {
+	public YoutubeInfoRequest getEditInfoByUrl(YoutubeRequest youtubeUserIdDto) {
 		User user = userRepository.findById(youtubeUserIdDto.getUserId()).get();
-	
-		YoutubeInfoDto result = new YoutubeInfoDto(user, youtubeUserIdDto.getYoutubeUrl());
+
+		YoutubeInfoRequest result = new YoutubeInfoRequest(user, youtubeUserIdDto.getYoutubeUrl());
 		List<FeedDto> feedList = null;//Arrays.asList(modelMapper.map(user.getFeedList(), FeedDto[].class));
 
 		result.setFeedList(feedList);

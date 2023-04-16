@@ -3,21 +3,14 @@ package com.favshare.pop.service;
 import java.time.LocalDateTime;
 import java.util.*;
 
-import com.favshare._temp.dto.IdolDto;
-import com.favshare._temp.dto.PopAlgoDto;
-import com.favshare._temp.dto.PopDto;
-import com.favshare._temp.dto.PopInfoDto;
-import com.favshare._temp.dto.input.FriendFeedDto;
-import com.favshare._temp.dto.input.IdolUserIdDto;
-import com.favshare._temp.dto.input.UserProfileDto;
-import com.favshare._temp.dto.input.YoutubeEditPopDto;
+
 import com.favshare.feed.entity.Feed;
 import com.favshare.feed.repository.FeedRepository;
 import com.favshare.pop.dto.pop.*;
 import com.favshare.user.service.UserService;
+import com.favshare.youtube.dto.YoutubeEditPopRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Service;
 import com.favshare.idol.entity.IdolEntity;
 import com.favshare.idol.entity.InterestIdolEntity;
@@ -162,7 +155,7 @@ public class PopService {
 	}
 
 	@Transactional
-	public void insertPop(YoutubeEditPopDto youtubeEditPopDto) {
+	public void insertPop(YoutubeEditPopRequest youtubeEditPopDto) {
 		User user = userRepository.findById(youtubeEditPopDto.getUserId()).get();
 		YoutubeEntity youtubeEntity = youtubeRepository.findByUrl(youtubeEditPopDto.getYoutubeUrl());
 

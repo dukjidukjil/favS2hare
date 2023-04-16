@@ -1,20 +1,21 @@
-package com.favshare._temp.dto;
+package com.favshare.youtube.dto;
+
+import com.favshare._temp.dto.PopDto;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 @Data
 @NoArgsConstructor
-public class YoutubeDetailDto {
+public class YoutubeDetail {
 
 	private String url;
 	private boolean isBookmarked;
 	private List<PopDto> popList = new ArrayList<>();
 
-	public YoutubeDetailDto(String url, boolean isBookmarked) {
+	public YoutubeDetail(String url, boolean isBookmarked) {
 		this.url = url;
 		this.isBookmarked = isBookmarked;
 	}

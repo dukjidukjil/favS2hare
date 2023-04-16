@@ -1,23 +1,22 @@
-package com.favshare._temp.dto;
+package com.favshare.youtube.dto;
+
+import com.favshare.user.entity.User;
+import com.favshare.youtube.entity.StoreYoutubeEntity;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.favshare.youtube.entity.StoreYoutubeEntity;
-import com.favshare.user.entity.User;
-
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 @Data
 @NoArgsConstructor
-public class YoutubeBookmarkDto {
+public class YoutubeBookmarkResponse {
 
 	private int userId;
 
 	private List<StoreYoutubeEntity> storeYoutubeList = new ArrayList<>();
 
-	public YoutubeBookmarkDto(User user) {
+	public YoutubeBookmarkResponse(User user) {
 		this.userId = user.getId();
 		this.storeYoutubeList = user.getStoreYoutubeList();
 	}

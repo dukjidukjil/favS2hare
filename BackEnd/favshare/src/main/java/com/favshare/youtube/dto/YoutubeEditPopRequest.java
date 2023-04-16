@@ -1,16 +1,15 @@
-package com.favshare._temp.dto.input;
-
-import java.time.LocalDateTime;
+package com.favshare.youtube.dto;
 
 import com.favshare.feed.entity.Feed;
 import com.favshare.pop.entity.Pop;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
-public class YoutubeEditPopDto {
+public class YoutubeEditPopRequest {
 
 	private int userId;
 	private String youtubeUrl;
@@ -23,7 +22,7 @@ public class YoutubeEditPopDto {
 	private int views;
 	private boolean isMuted;
 
-	public YoutubeEditPopDto(Pop pop, Feed feedEntity) {
+	public YoutubeEditPopRequest(Pop pop, Feed feedEntity) {
 		this.userId = pop.getUser().getId();
 		this.youtubeUrl = pop.getYoutubeEntity().getUrl();
 		this.feedId = feedEntity.getId();

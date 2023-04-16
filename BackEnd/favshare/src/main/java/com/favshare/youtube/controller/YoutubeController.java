@@ -2,8 +2,10 @@ package com.favshare.youtube.controller;
 
 import java.util.List;
 
-import com.favshare._temp.dto.YoutubeDetailDto;
-import com.favshare._temp.dto.input.YoutubeUserIdDto;
+
+import com.favshare.youtube.dto.YoutubeDetail;
+import com.favshare.youtube.dto.YoutubeDetailRequest;
+import com.favshare.youtube.dto.YoutubeRequest;
 import com.favshare.youtube.service.YoutubeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,14 +50,14 @@ public class YoutubeController {
 		}
 	}
 
-	@ApiOperation(value = "유튜브 관련 정보", response = YoutubeDetailDto.class)
+	@ApiOperation(value = "유튜브 관련 정보", response = YoutubeDetailRequest.class)
 	@PostMapping("/detail")
-	public ResponseEntity<YoutubeDetailDto> showYoutubeDetil(@RequestBody YoutubeUserIdDto youtubeUserIdDto) {
+	public ResponseEntity<YoutubeDetail> showYoutubeDetail(@RequestBody YoutubeRequest youtubeUserIdDto) {
 		try {
-			YoutubeDetailDto youtubeDetailDto = youtubeService.getDetailByUrl(youtubeUserIdDto);
-			return new ResponseEntity<YoutubeDetailDto>(youtubeDetailDto, HttpStatus.OK);
+			YoutubeDetail youtubeDetailDto = youtubeService.getDetailByUrl(youtubeUserIdDto);
+			return new ResponseEntity<YoutubeDetail>(youtubeDetailDto, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<YoutubeDetailDto>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<YoutubeDetail>(HttpStatus.BAD_REQUEST);
 		}
 
 	}

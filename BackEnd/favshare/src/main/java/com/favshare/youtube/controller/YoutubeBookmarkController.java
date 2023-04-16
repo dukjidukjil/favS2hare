@@ -2,9 +2,10 @@ package com.favshare.youtube.controller;
 
 import java.util.List;
 
-import com.favshare._temp.dto.YoutubeBookmarkDto;
-import com.favshare._temp.dto.YoutubeDto;
-import com.favshare._temp.dto.input.YoutubeUserIdDto;
+
+import com.favshare.youtube.dto.YoutubeBookmarkResponse;
+import com.favshare.youtube.dto.YoutubeResponse;
+import com.favshare.youtube.dto.YoutubeRequest;
 import com.favshare.youtube.service.StoreYoutubeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,31 +29,31 @@ public class YoutubeBookmarkController {
 
 	@ApiOperation(value = "유튜브 저장", response = ResponseEntity.class)
 	@PostMapping
-	public ResponseEntity<?> storeYoutube(@RequestBody YoutubeUserIdDto youtubeUserIdDto) {
+	public ResponseEntity<?> storeYoutube(@RequestBody YoutubeRequest youtubeRequest) {
 		try {
-			storeYoutubeService.insertBookmark(youtubeUserIdDto);
+			storeYoutubeService.insertBookmark(youtubeRequest);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
 
-	@ApiOperation(value = "유튜브 저장 목록 확인", response = YoutubeBookmarkDto.class)
+	@ApiOperation(value = "유튜브 저장 목록 확인", response = YoutubeBookmarkResponse.class)
 	@GetMapping("/{userId}")
-	public ResponseEntity<List<YoutubeDto>> showYoutubeBookmark(@PathVariable("userId") int userId) {
+	public ResponseEntity<List<YoutubeResponse>> showYoutubeBookmark(@PathVariable("userId") int userId) {
 		try {
-			List<YoutubeDto> youtubeBookmarkList = storeYoutubeService.getYoutubeBookmarkById(userId);
-			return new ResponseEntity<List<YoutubeDto>>(youtubeBookmarkList, HttpStatus.OK);
+			List<YoutubeResponse> youtubeBookmarkList = storeYoutubeService.getYoutubeBookmarkById(userId);
+			return new ResponseEntity<>(youtubeBookmarkList, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<List<YoutubeDto>>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	@ApiOperation(value = "유튜브 저장 삭제", response = ResponseEntity.class)
 	@DeleteMapping
-	public ResponseEntity<?> deleteYoutubeBookMark(@RequestBody YoutubeUserIdDto youtubeUserIdDto) {
+	public ResponseEntity<?> deleteYoutubeBookMark(@RequestBody YoutubeRequest youtubeRequest) {
 		try {
-			storeYoutubeService.deleteYoutubeBookMarkById(youtubeUserIdDto);
+			storeYoutubeService.deleteYoutubeBookMarkById(youtubeRequest);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

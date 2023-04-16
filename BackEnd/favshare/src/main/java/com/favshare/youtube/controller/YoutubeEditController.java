@@ -2,9 +2,10 @@ package com.favshare.youtube.controller;
 
 import java.util.List;
 
-import com.favshare._temp.dto.YoutubeInfoDto;
-import com.favshare._temp.dto.input.YoutubeEditPopDto;
-import com.favshare._temp.dto.input.YoutubeUserIdDto;
+
+import com.favshare.youtube.dto.YoutubeEditPopRequest;
+import com.favshare.youtube.dto.YoutubeInfoRequest;
+import com.favshare.youtube.dto.YoutubeRequest;
 import com.favshare.youtube.service.YoutubeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,18 +29,18 @@ public class YoutubeEditController {
 
 	@ApiOperation(value = "유튜브 편집 화면 정보", response = List.class)
 	@PostMapping("/info")
-	public ResponseEntity<YoutubeInfoDto> showYoutubeEdit(@RequestBody YoutubeUserIdDto youtubeUserIdDto) {
+	public ResponseEntity<YoutubeInfoRequest> showYoutubeEdit(@RequestBody YoutubeRequest youtubeUserIdDto) {
 		try {
-			YoutubeInfoDto youtubeEditDto = youtubeService.getEditInfoByUrl(youtubeUserIdDto);
-			return new ResponseEntity<YoutubeInfoDto>(youtubeEditDto, HttpStatus.OK);
+			YoutubeInfoRequest youtubeEditDto = youtubeService.getEditInfoByUrl(youtubeUserIdDto);
+			return new ResponseEntity<YoutubeInfoRequest>(youtubeEditDto, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<YoutubeInfoDto>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<YoutubeInfoRequest>(HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	@ApiOperation(value = "유튜브 편집 정보 저장", response = ResponseEntity.class)
 	@PostMapping
-	public ResponseEntity<?> saveYoutubeEdit(@RequestBody YoutubeEditPopDto youtubeEditPopDto) {
+	public ResponseEntity<?> saveYoutubeEdit(@RequestBody YoutubeEditPopRequest youtubeEditPopDto) {
 		try {
 			PopService.insertPop(youtubeEditPopDto);
 			return new ResponseEntity<>(HttpStatus.OK);
