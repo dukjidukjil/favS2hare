@@ -73,33 +73,4 @@ public class FeedController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
-
-
-/*
- * popInFeed로 이동
- */
-//	@ApiOperation(value = "Feed 설정 화면 - 피드 내 pop 추가", response = ResponseEntity.class)
-//	@PostMapping("/pop")
-//	public ResponseEntity<?> addPopInFeed(@RequestBody FeedPopIdDto feedPopIdDto) {
-//		try {
-//			popInFeedService.insertPopInFeed(feedPopIdDto);
-//			return new ResponseEntity<>(HttpStatus.OK);
-//		} catch (Exception e) {
-//			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//
-//		}
-//	}
-//
-//	@ApiOperation(value = "Feed 설정 화면 - 피드 내 pop 삭제", response = ResponseEntity.class)
-//	@DeleteMapping("/pop")
-//	public ResponseEntity<?> deletePopInFeed(@RequestBody FeedPopIdDto feedPopIdDto) {
-//		try {
-//			popInFeedService.deletePopInFeed(feedPopIdDto);
-//			return new ResponseEntity<>(HttpStatus.OK);
-//		} catch (Exception e) {
-//			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//		}
-//	}
-//
-
 }
