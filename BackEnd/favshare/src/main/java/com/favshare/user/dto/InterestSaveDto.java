@@ -1,8 +1,10 @@
-package com.favshare._temp.dto.input;
+package com.favshare.user.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
-
-import lombok.*;
 
 @Data
 @NoArgsConstructor

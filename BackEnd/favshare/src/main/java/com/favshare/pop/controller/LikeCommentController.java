@@ -1,10 +1,8 @@
 package com.favshare.pop.controller;
 
-import com.favshare._temp.dto.input.UserCommentIdDto;
 import com.favshare.pop.dto.likecomment.LikeCommentRequest;
 import com.favshare.pop.service.LikeCommentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

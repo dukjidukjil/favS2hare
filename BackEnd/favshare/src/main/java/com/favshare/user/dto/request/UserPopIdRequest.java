@@ -1,11 +1,11 @@
-package com.favshare._temp.dto.input;
+package com.favshare.user.dto.request;
 
 import lombok.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserPopIdDto {
+public class UserPopIdRequest {
 	private int userId;
 	private int popId;
 }

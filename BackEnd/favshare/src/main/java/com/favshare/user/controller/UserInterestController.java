@@ -3,10 +3,10 @@ package com.favshare.user.controller;
 import java.util.List;
 
 import com.favshare.idol.dto.IdolDto;
-import com.favshare._temp.dto.input.InterestSaveDto;
 import com.favshare.idol.entity.IdolEntity;
 import com.favshare.idol.service.IdolService;
 import com.favshare.idol.service.InterestIdolService;
+import com.favshare.user.dto.InterestSaveDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

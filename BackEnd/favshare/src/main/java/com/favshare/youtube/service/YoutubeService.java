@@ -1,28 +1,17 @@
 package com.favshare.youtube.service;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-
-
-import com.favshare._temp.dto.FeedDto;
-import com.favshare.pop.dto.pop.PopDto;
+import com.favshare.feed.dto.FeedDto;
 import com.favshare.idol.entity.InterestIdolEntity;
+import com.favshare.idol.repository.IdolRepository;
+import com.favshare.idol.repository.InterestIdolRepository;
+import com.favshare.pop.dto.pop.PopDto;
 import com.favshare.user.entity.User;
+import com.favshare.user.repository.UserRepository;
 import com.favshare.youtube.dto.YoutubeDetail;
 import com.favshare.youtube.dto.YoutubeInfoRequest;
 import com.favshare.youtube.dto.YoutubeRequest;
 import com.favshare.youtube.entity.YoutubeEntity;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
-import com.favshare.idol.repository.IdolRepository;
-import com.favshare.idol.repository.InterestIdolRepository;
 import com.favshare.youtube.repository.StoreYoutubeRepository;
-import com.favshare.user.repository.UserRepository;
 import com.favshare.youtube.repository.YoutubeRepository;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpRequest;
@@ -35,6 +24,11 @@ import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.ResourceId;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor

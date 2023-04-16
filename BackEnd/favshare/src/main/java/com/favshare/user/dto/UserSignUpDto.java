@@ -1,4 +1,4 @@
-package com.favshare._temp.dto.input;
+package com.favshare.user.dto;
 
 import java.util.Date;
 

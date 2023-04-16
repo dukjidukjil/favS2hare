@@ -1,4 +1,4 @@
-package com.favshare._temp.dto;
+package com.favshare.feed.dto;
 
 import com.favshare.feed.entity.Feed;
 import lombok.*;

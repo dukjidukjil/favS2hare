@@ -1,4 +1,4 @@
-package com.favshare._temp.dto.input;
+package com.favshare.follow.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -3,12 +3,13 @@ package com.favshare.user.controller;
 import java.util.HashMap;
 import java.util.List;
 
-import com.favshare._temp.dto.FeedDto;
+
+import com.favshare.feed.dto.FeedDto;
+import com.favshare.follow.dto.FollowForFollowDto;
 import com.favshare.pop.dto.pop.PopDto;
-import com.favshare._temp.dto.input.FeedUserIdDto;
-import com.favshare._temp.dto.input.FollowForFollowDto;
 import com.favshare.pop.dto.pop.UserProfileDto;
 import com.favshare.pop.service.PopService;
+import com.favshare.user.dto.request.FeedUserIdRequest;
 import com.favshare.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -64,16 +65,16 @@ public class UserProfileController {
 
 	@ApiOperation(value = "프로필 보기 아래 부분 - 피드별 poplist 출력 ", response = ResponseEntity.class)
 	@PostMapping("/popList")
-	public ResponseEntity<List<PopDto>> showPopInFeed(@RequestBody FeedUserIdDto feedUserIdDto) {
-		int userId = feedUserIdDto.getUserId();
+	public ResponseEntity<List<PopDto>> showPopInFeed(@RequestBody FeedUserIdRequest feedUserIdRequest) {
+		int userId = feedUserIdRequest.getUserId();
 		List<PopDto> popInFeedDtoList;
 
 		// feedId가 0이라는 것은 전체 피드라는 의미
-		if (feedUserIdDto.getFeedId() == 0) {
-			popInFeedDtoList = userService.getAllPopList(feedUserIdDto);
+		if (feedUserIdRequest.getFeedId() == 0) {
+			popInFeedDtoList = userService.getAllPopList(feedUserIdRequest);
 
 		} else { // 전체 피드 말고, 각각의 피드일때
-			popInFeedDtoList = userService.getPopInFeedList(feedUserIdDto.getFeedId(), userId);
+			popInFeedDtoList = userService.getPopInFeedList(feedUserIdRequest.getFeedId(), userId);
 		}
 		return new ResponseEntity<List<PopDto>>(popInFeedDtoList, HttpStatus.OK);
 

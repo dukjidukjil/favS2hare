@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.favshare.pop.dto.pop.PopDto;
-import com.favshare._temp.dto.input.UserIdMessageDto;
 import com.favshare.pop.dto.pop.UserProfileDto;
 import com.favshare.pop.service.PopService;
+import com.favshare.user.dto.UserIdMessageDto;
 import com.favshare.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

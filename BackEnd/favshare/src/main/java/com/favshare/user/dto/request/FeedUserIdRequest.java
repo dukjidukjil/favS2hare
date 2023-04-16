@@ -1,11 +1,11 @@
-package com.favshare._temp.dto.input;
+package com.favshare.user.dto.request;
 
 import lombok.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FeedUserIdDto {
+public class FeedUserIdRequest {
 	int feedId;
 	int userId;
 }

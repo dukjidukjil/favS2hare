@@ -1,4 +1,4 @@
-package com.favshare._temp.dto;
+package com.favshare.user.dto;
 
 import com.favshare.user.entity.User;
 

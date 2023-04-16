@@ -3,8 +3,9 @@ package com.favshare.user.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.favshare._temp.dto.FollowDto;
-import com.favshare._temp.dto.input.FromUserToUserDto;
+
+import com.favshare.follow.dto.FollowDto;
+import com.favshare.follow.dto.FromUserToUserDto;
 import com.favshare.follow.entity.FollowEntity;
 import com.favshare.follow.service.FollowService;
 import com.favshare.user.service.UserService;

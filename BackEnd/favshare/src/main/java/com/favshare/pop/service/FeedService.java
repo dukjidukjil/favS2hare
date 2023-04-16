@@ -1,6 +1,6 @@
 //package com.favshare._temp.service;
 //
-//import com.favshare._temp.dto.input.FeedUserIdDto;
+//import com.favshare.user.dto.request.FeedUserIdDto;
 //import com.favshare._temp.dto.input.IdFeedImageUrlDto;
 //import com.favshare._temp.dto.input.IdNameDto;
 //import com.favshare._temp.entity.FeedEntity;

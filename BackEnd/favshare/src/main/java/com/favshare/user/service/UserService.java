@@ -4,8 +4,15 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+import com.favshare.feed.dto.FeedDto;
 import com.favshare.feed.entity.Feed;
 import com.favshare.feed.repository.FeedRepository;
+import com.favshare.follow.dto.FollowForFollowDto;
+import com.favshare.user.dto.UserAccountDto;
+import com.favshare.user.dto.UserSignUpDto;
+import com.favshare.user.dto.request.EmailPasswordDto;
+import com.favshare.user.dto.request.FeedUserIdRequest;
+import com.favshare.user.dto.request.UserInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -122,7 +129,7 @@ public class UserService {
 //		userRepository.save(user);
 //	}
 
-	public List<PopDto> getAllPopList(FeedUserIdDto feedUserIdDto) {
+	public List<PopDto> getAllPopList(FeedUserIdRequest feedUserIdDto) {
 		User user = userRepository.getById(feedUserIdDto.getUserId());
 
 		List<PopDto> result = null;//Arrays.asList(modelMapper.map(user.getPopList(), PopDto[].class));
