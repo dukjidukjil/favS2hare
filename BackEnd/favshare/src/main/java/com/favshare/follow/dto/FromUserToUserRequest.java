@@ -5,7 +5,8 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FromUserToUserDto {
+@Builder
+public class FromUserToUserRequest {
 	int fromUserId;
 	int toUserId;
 }

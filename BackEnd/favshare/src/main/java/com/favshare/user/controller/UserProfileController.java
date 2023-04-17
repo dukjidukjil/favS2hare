@@ -114,7 +114,7 @@ public class UserProfileController {
 
 	@ApiOperation(value = "친구 프로필 보기의 윗부분", response = ResponseEntity.class)
 	@PostMapping("/friend")
-	public ResponseEntity<HashMap<String, Object>> showFreindProfileHead(
+	public ResponseEntity<HashMap<String, Object>> showFriendProfileHead(
 			@RequestBody FollowForFollowDto followForFollowDto) {
 		try {
 
